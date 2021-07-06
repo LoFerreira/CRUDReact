@@ -1,0 +1,15 @@
+{
+  "cars": [
+    {
+      "name": "Gol",
+      "brandId": 1,
+      "id": 1
+    }
+  ],
+  "brands": [
+    {
+      "name": "Fiat",
+      "id": 1
+    }
+  ]
+}
