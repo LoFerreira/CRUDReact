@@ -10,3 +10,17 @@ function Button({ children, onClick, disabled, pending}) {
 }
 
 export default Button;
+
+// Types of props expected
+Button.propTypes = {
+  children: PropTypes.node.isRequired,
+  onCLick: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
+  pending: PropTypes.bool,
+};
+
+// default of props for the parameters
+Button.defaultProps = {
+  disabled: false,
+  pending: false,
+}
