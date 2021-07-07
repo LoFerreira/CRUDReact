@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function Button({ children, onClick, disabled, pending}) {
+function Button({ children, onClick, disabled, pending, size, intent }) {
   return (
     <button onClick={onClick} disabled={disabled || pending}>
       {pending ? "Loading..." : children}
@@ -23,4 +23,4 @@ Button.propTypes = {
 Button.defaultProps = {
   disabled: false,
   pending: false,
-}
+};
