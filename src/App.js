@@ -6,6 +6,8 @@ import Modal from "./components/modal";
 
 function App() {
   const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [visible, setVisible] = React.useState(false);
 
   return (
@@ -25,16 +27,18 @@ function App() {
         placeholder="Enter your first name"
         type="text"
       />
-      <Separator size="xs" />
+      <Separator size="lg" />
       <Button
         onClick={() => {
           setVisible(true);
         }}
-        size="md"
+        style={{
+          borderRadius: "10px",
+        }}
       >
         Open Modal
       </Button>
-      <Separator size="md" />
+      <Separator size="lg" />
       <Modal visible={visible} onRequestClose={() => setVisible(false)}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel leo ex.
         Nulla bibendum neque ut tincidunt volutpat. Donec pellentesque orci
@@ -43,13 +47,29 @@ function App() {
         Duis sed tellus euismod, maximus diam sit amet, iaculis nisl. Vestibulum
         vitae rutrum turpis. Nulla eu magna feugiat, viverra justo auctor,
         finibus ante. Fusce nec hendrerit magna.
+        <Separator />
+        <Button size="xl">Não</Button> <Button size="xl">Sim</Button>
       </Modal>
-      <Button
-        onClick={() => {}}
-        intent="secondary"
-      >
+      <Separator />
+      <Button onClick={() => {}} intent="secondary">
         intent
       </Button>
+      <Separator />
+      <Input
+        id="email"
+        value={email}
+        onChange={(email) => setEmail(email)}
+        placeholder="Enter your email"
+        type="email"
+      />
+      <Separator />
+      <Input
+        id="password"
+        value={password}
+        onChange={(password) => setPassword(password)}
+        placeholder="Enter your password"
+        type="password"
+      />
     </>
   );
 }

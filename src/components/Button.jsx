@@ -1,32 +1,71 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function getSize(size) {
-  return {
-    xs: 4,
-    sm: 8,
-    md: 16,
-    lg: 32,
-    xl: 34,
-  }[size];
+const sizeMap = {
+  xs: {
+    width: "4px",
+    height: "4px",
+  },
+  sm: {
+    width: "8px",
+    height: "8px",
+  },
+  md: {
+    width: "16px",
+    height: "16px",
+  },
+  lg: {
+    width: "32px",
+    height: "32px",
+  },
+  xl: {
+    width: "64px",
+    height: "64px",
+  },
 };
 
-function getIntent(intent) {
-  return{
-    primary: "white",
-    secondary: "rgba(0, 0, 0, 0.2)",
-  }[intent]
-}
+const variantMap = {
+  solid: {
+    primary: {},
+    secondary: {
+      backgroundColor: "red",
+    }
+  },
+  outline: {
+    primary: {
+      background: "none",
+      border: "1px solid black",
+      color: "black",
+    },
+    secondary: {
+      background: "none",
+      border: "1px solid red",
+      color: "red",
+    },
+  },
+  ghost: {
+    background: "none",
+    border: "none",
+  },
+};
 
-function Button({ children, onClick, disabled, pending, size, intent }) {
+function Button({
+  children,
+  onClick,
+  disabled,
+  pending,
+  size,
+  variant,
+  intent,
+}) {
   return (
     <button
       onClick={onClick}
       disabled={disabled || pending}
       style={{
-        width: getSize(size),
-        height: getSize(size),
-        backgroundColor: getIntent(intent),
+        ...sizeMap[size],
+        ...variantMap[variant][intent],
+        boxShadow: "2px 2px black",
       }}
     >
       {pending ? "Loading..." : children}
@@ -50,4 +89,6 @@ Button.propTypes = {
 Button.defaultProps = {
   disabled: false,
   pending: false,
+  variant: "solid",
+  intent: "primary",
 };

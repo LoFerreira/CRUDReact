@@ -1,7 +1,11 @@
 import React from "react";
 import { createPortal } from "react-dom";
+import Button from "./button";
+import Separator from "./separator";
 
 function Modal({ children, visible, onRequestClose }) {
+  const modalDiv = document.getElementById("modalDiv");
+
   return visible
     ? createPortal(
         <div
@@ -31,7 +35,7 @@ function Modal({ children, visible, onRequestClose }) {
             {children}
           </div>
         </div>,
-        document.body
+        modalDiv
       )
     : null;
 }
