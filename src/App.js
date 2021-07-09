@@ -16,6 +16,7 @@ function App() {
         onClick={(e) => {
           alert("clicado");
         }}
+        variant="ghost"
       >
         Clique
       </Button>
@@ -31,9 +32,6 @@ function App() {
       <Button
         onClick={() => {
           setVisible(true);
-        }}
-        style={{
-          borderRadius: "10px",
         }}
       >
         Open Modal

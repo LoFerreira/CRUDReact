@@ -1,7 +1,5 @@
 import React from "react";
 import { createPortal } from "react-dom";
-import Button from "./button";
-import Separator from "./separator";
 
 function Modal({ children, visible, onRequestClose }) {
   const modalDiv = document.getElementById("modalDiv");

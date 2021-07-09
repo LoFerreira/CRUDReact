@@ -44,8 +44,10 @@ const variantMap = {
     },
   },
   ghost: {
-    background: "none",
-    border: "none",
+    primary: {
+      background: "none",
+      border: "none",
+    }
   },
 };
 
