@@ -1,22 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-function getSize(size) {
-  return {
-    xs: 4,
-    sm: 8,
-    md: 16,
-    lg: 32,
-    xl: 64,
-  }[size];
+const sizeMap = {
+  xs: {
+    width: "4px",
+    height: "4px",
+  },
+  sm: {
+    width: "8px",
+    height: "8px",
+  },
+  md: {
+    width: "16px",
+    height: "16px",
+  },
+  lg: {
+    width: "32px",
+    height: "32px",
+  },
+  xl: {
+    width: "64px",
+    height: "64px",
+  },
 }
 
 function Separator({ size }) {
   return (
     <div
       style={{
-        width: getSize(size),
-        height: getSize(size),
+        ...sizeMap[size],
       }}
     />
   );
