@@ -80,7 +80,7 @@ export default Button;
 // Types of props expected
 Button.propTypes = {
   children: PropTypes.node.isRequired,
-  onCLick: PropTypes.func.isRequired,
+  onCLick: PropTypes.func,
   disabled: PropTypes.bool,
   pending: PropTypes.bool,
   size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),

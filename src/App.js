@@ -3,23 +3,50 @@ import Button from "./components/button";
 import Separator from "./components/separator";
 import Input from "./components/input";
 import Modal from "./components/modal";
+import Select from "./components/select";
+import Table from "./components/table";
+import Toast from "./components/toast";
+import ReactNotifications from "react-notifications-component";
 
 function App() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [visible, setVisible] = React.useState(false);
+  const [selectedBrand, setSelectedBrand] = React.useState(2);
+
+  // Request get for db.jason with the brands
+  const brands = [
+    { id: 1, name: "Citroen" },
+    { id: 2, name: "Volkswagen" },
+  ];
+
+  const optionsBrand = brands.map((brand) => ({
+    value: brand.id,
+    label: brand.name,
+  }));
+
+  // Request get for db.jason with the cars
+  const cars = [
+    {
+      plate: "QJX-2932",
+      color: "Blue",
+      brand: "Volkswagen",
+      action: "Botao",
+    },
+    {
+      plate: "QJX-2932",
+      color: "Blue",
+      brand: "Volkswagen",
+      action: "Botao",
+    },
+  ];
 
   return (
     <>
-      <Button
-        onClick={(e) => {
-          alert("clicado");
-        }}
-        variant="ghost"
-      >
-        Clique
-      </Button>
+      <ReactNotifications />
+      <Toast />
+
       <Separator size="xl" />
       <Input
         id="name"
@@ -46,7 +73,12 @@ function App() {
         vitae rutrum turpis. Nulla eu magna feugiat, viverra justo auctor,
         finibus ante. Fusce nec hendrerit magna.
         <Separator />
-        <Button size="xl">Não</Button> <Button size="xl">Sim</Button>
+        <Button onClick={() => {}} size="xl">
+          Não
+        </Button>{" "}
+        <Button onClick={() => {}} size="xl">
+          Sim
+        </Button>
       </Modal>
       <Separator />
       <Button onClick={() => {}} intent="secondary">
@@ -68,6 +100,14 @@ function App() {
         placeholder="Enter your password"
         type="password"
       />
+      <Separator />
+      <Select
+        value={selectedBrand}
+        options={optionsBrand}
+        onChange={setSelectedBrand}
+      />
+      <Separator />
+      <Table cars={cars} />
     </>
   );
 }
