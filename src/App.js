@@ -45,7 +45,7 @@ function App() {
   return (
     <>
       <ReactNotifications />
-      <Toast />
+      <Toast children="Sim"/>
 
       <Separator size="xl" />
       <Input
