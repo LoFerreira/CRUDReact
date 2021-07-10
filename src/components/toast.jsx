@@ -2,6 +2,7 @@ import React from "react";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import PropTypes from "prop-types";
+import Button from "./button"
 
 function Toast({ notify, children }) {
   const addNotification = function () {
@@ -24,13 +25,13 @@ function Toast({ notify, children }) {
       },
     });
   };
-
+  
   var notification = "add";
-
+  
   if(notify === notification) {
-    return <button onClick={addNotification}>{children}</button>
+    return <Button onClick={addNotification}>{children}</Button>
   } else {
-    return <button onClick={delNotification}>{children}</button>
+    return <Button onClick={delNotification}>{children}</Button>
   }
 }
 

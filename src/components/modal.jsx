@@ -23,7 +23,7 @@ function Modal({ children, visible, onRequestClose }) {
         >
           <div
             style={{
-              width: 600,
+              width: 450,
               backgroundColor: "white",
               borderRadius: 6,
               padding: 16,

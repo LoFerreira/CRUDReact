@@ -1,32 +1,49 @@
-import React from "react";
+import React from "./react";
 import PropTypes from "prop-types";
 
-function Table({ cars }) {
+function Table({ data, columns, rowKey }) {
   return (
-    <table>
+    <table border={1} style={{ border: 1 }}>
       <tr>
-        <th>Placa</th>
-        <th>Cor</th>
-        <th>Marca</th>
-        <th>Ações</th>
+        {columns.map((column) => (
+          <th key={column.path} style={{ padding: 10 }}></th>
+        ))}
       </tr>
-      {cars.map((car) => (
+
+      {data.length ? (
+        data.map((rowData, index) => (
+          <tr key={rowData[rowKey]}>
+            {columns.map((column) =>
+              column.render ? (
+                <td style={{ padding: 10 }}>
+                  {column.render({ rowData, index })}
+                </td>
+              ) : (
+                <td key={column.path} style={{ padding: 10 }}>
+                  {rowData[column.path]}
+                </td>
+              )
+            )}
+          </tr>
+        ))
+      ) : (
         <tr>
-          <th
-            plate={car.plate}
-            color={car.color}
-            brand={car.brand}
-            action={car.action}
-          ></th>
+          <td colSpan={columns.length}>Não há registros.</td>
         </tr>
-      ))}
+      )}
     </table>
   );
 }
 
 export default Table;
 
-// Types of props expected
 Table.propTypes = {
-  cars: PropTypes.node.isRequired,
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      path: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      render: PropTypes.func,
+    })
+  ),
+  rowKey: PropTypes.string,
 };

@@ -5,15 +5,23 @@ import Input from "./components/input";
 import Modal from "./components/modal";
 import Select from "./components/select";
 import Table from "./components/table";
+import Label from "./components/label";
+import Container from "./components/container";
 import Toast from "./components/toast";
 import ReactNotifications from "react-notifications-component";
 
 function App() {
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [plate, setPlate] = React.useState("");
   const [visible, setVisible] = React.useState(false);
   const [selectedBrand, setSelectedBrand] = React.useState(2);
+  const [people, setPeople] = React.useState([
+    { id: 1, name: "Leonardo", age: 20 },
+    { id: 2, name: "Felicio", age: 21 },
+    { id: 3, name: "Felicio", age: 44 },
+    { id: 4, name: "Queli", age: 43 },
+    { id: 5, name: "xinino", age: 10 },
+  ]);
+  const [deletingPerson, setDeletingPerson] = React.useState();
 
   // Request get for db.jason with the brands
   const brands = [
@@ -45,69 +53,78 @@ function App() {
   return (
     <>
       <ReactNotifications />
-      <Toast children="Sim"/>
 
-      <Separator size="xl" />
-      <Input
-        id="name"
-        value={name}
-        onChange={(value) => setName(value)}
-        placeholder="Enter your first name"
-        type="text"
-      />
-      <Separator size="lg" />
       <Button
         onClick={() => {
           setVisible(true);
         }}
       >
-        Open Modal
+        Excluir
       </Button>
-      <Separator size="lg" />
-      <Modal visible={visible} onRequestClose={() => setVisible(false)}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vel leo ex.
-        Nulla bibendum neque ut tincidunt volutpat. Donec pellentesque orci
-        bibendum metus congue suscipit.
-        <Separator size="sm" />
-        Duis sed tellus euismod, maximus diam sit amet, iaculis nisl. Vestibulum
-        vitae rutrum turpis. Nulla eu magna feugiat, viverra justo auctor,
-        finibus ante. Fusce nec hendrerit magna.
-        <Separator />
-        <Button onClick={() => {}} size="xl">
-          Não
-        </Button>{" "}
-        <Button onClick={() => {}} size="xl">
-          Sim
-        </Button>
+      <Modal 
+        visible={Boolean(deletingPerson)} 
+        onRequestClose={() => setDeletingPerson(null)}
+      >
+        Tem certeza que deseja excluir o jovem {deletingPerson?.name}??
+        <div>
+          <Button onClick={() => {
+            setPeople((currentState) => currentState.filter((person) => person.id !== deletingPerson.id)
+            );
+            setDeletingPerson(null);
+          }}
+          >
+            COM CERTEZA
+          </Button>
+          <Button onClick={() => setDeletingPerson(null)}>Não, Obrigado</Button>
+        </div>
       </Modal>
+      <div>
+        <Label htmlFor="plate" children="Filtrar por placa:" />
+        <Separator size="xs" />
+        <Input
+          id="plate"
+          value={plate}
+          onChange={(value) => setPlate(value)}
+          placeholder="XXX-0000"
+          type="text"
+        />
+      </div>
       <Separator />
-      <Button onClick={() => {}} intent="secondary">
-        intent
-      </Button>
-      <Separator />
-      <Input
-        id="email"
-        value={email}
-        onChange={(email) => setEmail(email)}
-        placeholder="Enter your email"
-        type="email"
-      />
-      <Separator />
-      <Input
-        id="password"
-        value={password}
-        onChange={(password) => setPassword(password)}
-        placeholder="Enter your password"
-        type="password"
-      />
-      <Separator />
-      <Select
-        value={selectedBrand}
-        options={optionsBrand}
-        onChange={setSelectedBrand}
-      />
+      <div>
+        <Label htmlFor="brand" children="Filtrar por marca:" />
+        <Separator size="xs" />
+        <Select
+          value={selectedBrand}
+          options={optionsBrand}
+          onChange={setSelectedBrand}
+        />
+      </div>
       <Separator />
       <Table cars={cars} />
+      <Separator />
+      <Container>
+        <Table
+          columns={[
+            { path: "name", label: "Nome" },
+            { path: "age", label: "Idade" },
+            {
+              path: "actions",
+              label: "Ações",
+              render: ({ rowData, index }) => {
+                return (
+                  <div>
+                    <Button>Editar</Button>
+                    <Button onCLick={() => setDeletingPerson(rowData)}>
+                      Excluir
+                    </Button>
+                  </div>
+                );
+              },
+            },
+          ]}
+          data={people}
+        />
+      </Container>
     </>
   );
 }

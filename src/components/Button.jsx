@@ -51,6 +51,13 @@ const variantMap = {
   },
 };
 
+const displayMap = {
+  displayNone: {
+    display: "none"
+  },
+  displayHidden: {},
+};
+
 function Button({
   children,
   onClick,
@@ -59,6 +66,7 @@ function Button({
   size,
   variant,
   intent,
+  display,
 }) {
   return (
     <button
@@ -68,6 +76,7 @@ function Button({
         ...sizeMap[size],
         ...variantMap[variant][intent],
         boxShadow: "2px 2px black",
+        ...displayMap[display]
       }}
     >
       {pending ? "Loading..." : children}
