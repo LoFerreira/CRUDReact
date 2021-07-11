@@ -53,7 +53,7 @@ function App() {
   return (
     <>
       <ReactNotifications />
-
+      <Toast notify="add" children="adicionar" />
       <Button
         onClick={() => {
           setVisible(true);
