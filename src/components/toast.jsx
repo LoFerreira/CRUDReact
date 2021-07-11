@@ -29,9 +29,9 @@ function Toast({ notify, children }) {
   var notification = "add";
   
   if(notify === notification) {
-    return <Button onClick={addNotification}>{children}</Button>
+    return <Button onClick={() => {addNotification()}}>{children}</Button>
   } else {
-    return <Button onClick={delNotification}>{children}</Button>
+    return <Button onClick={() => {addNotification()}}>{children}</Button>
   }
 }
 

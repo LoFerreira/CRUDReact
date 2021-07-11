@@ -53,31 +53,7 @@ function App() {
   return (
     <>
       <ReactNotifications />
-      <Toast notify="add" children="adicionar" />
-      <Button
-        onClick={() => {
-          setVisible(true);
-        }}
-      >
-        Excluir
-      </Button>
-      <Modal 
-        visible={Boolean(deletingPerson)} 
-        onRequestClose={() => setDeletingPerson(null)}
-      >
-        Tem certeza que deseja excluir o jovem {deletingPerson?.name}??
-        <div>
-          <Button onClick={() => {
-            setPeople((currentState) => currentState.filter((person) => person.id !== deletingPerson.id)
-            );
-            setDeletingPerson(null);
-          }}
-          >
-            COM CERTEZA
-          </Button>
-          <Button onClick={() => setDeletingPerson(null)}>Não, Obrigado</Button>
-        </div>
-      </Modal>
+      
       <div>
         <Label htmlFor="plate" children="Filtrar por placa:" />
         <Separator size="xs" />
@@ -89,7 +65,6 @@ function App() {
           type="text"
         />
       </div>
-      <Separator />
       <div>
         <Label htmlFor="brand" children="Filtrar por marca:" />
         <Separator size="xs" />
@@ -99,31 +74,47 @@ function App() {
           onChange={setSelectedBrand}
         />
       </div>
-      <Separator />
-      <Table cars={cars} />
-      <Separator />
+      
+      <Modal 
+        visible={Boolean(deletingPerson)} 
+        onRequestClose={() => setDeletingPerson(null)}
+      >
+        Tem certeza que deseja excluir: {deletingPerson?.name}??
+        <div>
+          <Button onClick={() => {
+            setPeople((currentState) => currentState.filter((person) => person.id !== deletingPerson.id)
+            );
+            setDeletingPerson(null);
+          }}
+          >
+            Sim
+          </Button>
+          <Button onClick={() => setDeletingPerson(null)}>Não</Button>
+        </div>
+      </Modal>
+      
       <Container>
         <Table
           columns={[
-            { path: "name", label: "Nome" },
-            { path: "age", label: "Idade" },
-            {
-              path: "actions",
-              label: "Ações",
-              render: ({ rowData, index }) => {
-                return (
-                  <div>
-                    <Button>Editar</Button>
-                    <Button onCLick={() => setDeletingPerson(rowData)}>
-                      Excluir
-                    </Button>
-                  </div>
-                );
-              },
+          { path: "name", label: "Nome" },
+          { path: "age", label: "Idade" },
+          {
+            path: "actions",
+            label: "Ações",
+            render: ({ rowData, index }) => {
+              return (
+                <div>
+                  <Button>Editar</Button>
+                  <Button onClick={() => setDeletingPerson(rowData)}>
+                    Excluir
+                  </Button>
+                </div>
+              );
             },
-          ]}
-          data={people}
-        />
+          },
+        ]}
+        data={people}
+        /> 
       </Container>
     </>
   );

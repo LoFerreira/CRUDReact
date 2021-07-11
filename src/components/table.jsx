@@ -3,10 +3,12 @@ import PropTypes from "prop-types";
 
 function Table({ data, columns, rowKey }) {
   return (
-    <table border={1} style={{ border: 1 }}>
+    <table border={1} >
       <tr>
         {columns.map((column) => (
-          <th key={column.path} style={{ padding: 10 }}></th>
+          <th key={column.path} style={{ padding: 10 }}>
+            {column.label}
+          </th>
         ))}
       </tr>
 
