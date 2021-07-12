@@ -7,8 +7,8 @@ const Container = ({ children }) => {
         display: "flex",
         flexDirection: "column",
         height: "70vh",
-        justifyContent: "center",
-        alignItems: "center",
+        marginLeft: 50,
+        marginRight: 50,
       }}
     >
       {children}

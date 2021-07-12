@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import Button from "./components/button";
 import Separator from "./components/separator";
 import Input from "./components/input";
@@ -7,12 +8,13 @@ import Select from "./components/select";
 import Table from "./components/table";
 import Label from "./components/label";
 import Container from "./components/container";
-import Toast from "./components/toast";
 import ReactNotifications from "react-notifications-component";
+
+import { store } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 
 function App() {
   const [plate, setPlate] = React.useState("");
-  const [visible, setVisible] = React.useState(false);
   const [selectedBrand, setSelectedBrand] = React.useState(2);
   const [people, setPeople] = React.useState([
     { id: 1, name: "Leonardo", age: 20 },
@@ -34,88 +36,132 @@ function App() {
     label: brand.name,
   }));
 
-  // Request get for db.jason with the cars
-  const cars = [
-    {
-      plate: "QJX-2932",
-      color: "Blue",
-      brand: "Volkswagen",
-      action: "Botao",
-    },
-    {
-      plate: "QJX-2932",
-      color: "Blue",
-      brand: "Volkswagen",
-      action: "Botao",
-    },
-  ];
+  function success() {
+    store.addNotification({
+      message: "carro adicionado com sucesso",
+      type: "success",
+      container: "top-center",
+      dismiss: {
+        duration: 3000,
+      },
+    });
+  };
+
+  function delet() {
+    store.addNotification({
+      message: "carro excluido com sucesso",
+      type: "success",
+      container: "top-center",
+      dismiss: {
+        duration: 3000,
+      },
+    });
+  };
+
+  function Home() {
+    return (
+      <>
+        <Button onClick={delet}>Excluir</Button>
+        <Button onClick={success}>Adicionar</Button>
+        <div style={{ display: "flex", flexDirection: "row", marginLeft: 50 }}>
+          <div style={{ border: "1px solid black", padding: 10 }}>
+            <Label htmlFor="plate" children="Filtrar por placa:" />
+            <Separator height="xs" />
+            <Input
+              id="plate"
+              value={plate}
+              onChange={(value) => setPlate(value)}
+              placeholder="XXX-0000"
+              type="text"
+            />
+          </div>
+          <Separator width="lg" />
+          <div style={{ border: "1px solid black", padding: 10 }}>
+            <Label htmlFor="brand" children="Filtrar por marca:" />
+            <Separator height="xs" />
+            <Select
+              value={selectedBrand}
+              options={optionsBrand}
+              onChange={setSelectedBrand}
+            />
+          </div>
+        </div>
+        <Separator height="lg" />
+        <Modal
+          visible={Boolean(deletingPerson)}
+          onRequestClose={() => setDeletingPerson(null)}
+        >
+          Tem certeza que deseja excluir: {deletingPerson?.name}??
+          <div>
+            <Button
+              onClick={() => {
+                setPeople((currentState) =>
+                  currentState.filter(
+                    (person) => person.id !== deletingPerson.id
+                  )
+                );
+                setDeletingPerson(null);
+                delet();
+              }}
+            >
+              Sim
+            </Button>
+            <Button onClick={() => setDeletingPerson(null)}>Não</Button>
+          </div>
+        </Modal>
+
+        <Container>
+          <Table
+            columns={[
+              { path: "name", label: "Nome" },
+              { path: "age", label: "Idade" },
+              {
+                path: "actions",
+                label: "Ações",
+                render: ({ rowData, index }) => {
+                  return (
+                    <div style={{ display: "flex", flexDirection: "row" }}>
+                      <Button>Editar</Button>
+                      <Separator width="md" />
+                      <Button
+                        intent="secondary"
+                        onClick={() => setDeletingPerson(rowData)}
+                      >
+                        Excluir
+                      </Button>
+                    </div>
+                  );
+                },
+              },
+            ]}
+            data={people}
+          />
+        </Container>
+      </>
+    );
+  }
 
   return (
     <>
-      <ReactNotifications />
-      
+    <ReactNotifications />
       <div>
-        <Label htmlFor="plate" children="Filtrar por placa:" />
-        <Separator size="xs" />
-        <Input
-          id="plate"
-          value={plate}
-          onChange={(value) => setPlate(value)}
-          placeholder="XXX-0000"
-          type="text"
-        />
+        <Link to="./">
+          <Button>Cars</Button>
+        </Link>
+        <Link to="./Pages/brands">
+          <Button>Brands</Button>
+        </Link>
+        <Link to="./Pages/new-car">
+          <Button>Add New Car</Button>
+        </Link>
+        <Link to="./Pages/edit-car">
+          <Button>Edit Car</Button>
+        </Link>
       </div>
-      <div>
-        <Label htmlFor="brand" children="Filtrar por marca:" />
-        <Separator size="xs" />
-        <Select
-          value={selectedBrand}
-          options={optionsBrand}
-          onChange={setSelectedBrand}
-        />
-      </div>
-      
-      <Modal 
-        visible={Boolean(deletingPerson)} 
-        onRequestClose={() => setDeletingPerson(null)}
-      >
-        Tem certeza que deseja excluir: {deletingPerson?.name}??
-        <div>
-          <Button onClick={() => {
-            setPeople((currentState) => currentState.filter((person) => person.id !== deletingPerson.id)
-            );
-            setDeletingPerson(null);
-          }}
-          >
-            Sim
-          </Button>
-          <Button onClick={() => setDeletingPerson(null)}>Não</Button>
-        </div>
-      </Modal>
-      
-      <Container>
-        <Table
-          columns={[
-          { path: "name", label: "Nome" },
-          { path: "age", label: "Idade" },
-          {
-            path: "actions",
-            label: "Ações",
-            render: ({ rowData, index }) => {
-              return (
-                <div>
-                  <Button>Editar</Button>
-                  <Button onClick={() => setDeletingPerson(rowData)}>
-                    Excluir
-                  </Button>
-                </div>
-              );
-            },
-          },
-        ]}
-        data={people}
-        /> 
-      </Container>
+      <Separator />
+      <h1>Cars</h1>
+      <Separator />
+      <Home />
     </>
   );
 }
