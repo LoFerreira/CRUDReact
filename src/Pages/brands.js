@@ -1,11 +1,9 @@
 import React from "react";
+import Button from "../components/button";
 
 function Brands() {
-    return(
-        <div>
-            HELLO, BRANDS!
-        </div>
-    )
+    return <Button>HELLO, WORLD!</Button>;
+
 }
 
 export default Brands;
