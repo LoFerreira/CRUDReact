@@ -1,67 +1,39 @@
 import React from "react";
-import Button from "./Button";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Separator from "./separator";
 
 function Menu() {
   return (
-    <Router>
-      <div>
-        <nav>
-          <ul
-            style={{
-              listStyleType: "none",
-              borderBottom: "solid black",
-            }}
-          >
-            <li>
-              <Link
-                to="/Carros"
-                style={{
-                  textDecoration: "none",
-                  color: "black",
-                }}
-              >
-                Carros
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/Marcas"
-                style={{
-                  textDecoration: "none",
-                  color: "black",
-                }}
-              >
-                {" "}
-                Marcas
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </div>
-
-      <div>
-        <Switch>
-          <Route path="/Marcas">
-            <Marcas />
-          </Route>
-          <Route path="/Carros">
-            <Carros />
-          </Route>
-        </Switch>
-
-        <Button name="Novo Carro" />
-      </div>
-    </Router>
+    <div
+      style={{
+        color: "black",
+        display: "flex",
+        padding: "10px 25px ",
+        borderBottom: "3px solid black"
+      }}
+    >
+      <Link
+        to="/carros"
+        style={{
+          color: "black",
+          fontSize: "20px",
+        }}
+      >
+        Cars
+      </Link>
+      <Separator />
+      <Link
+        to="/marcas"
+        style={{
+          color: "black",
+          fontSize: "20px",
+        }}
+      >
+        Brands
+      </Link>
+    </div>
+    
   );
-}
-
-function Carros() {
-  return <h2>Carros</h2>;
-}
-
-function Marcas() {
-  return <h2>Marcas</h2>;
 }
 
 export default Menu;

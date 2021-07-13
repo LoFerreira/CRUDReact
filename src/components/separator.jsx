@@ -1,48 +1,34 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const widthMap = {
+const sizeMap = {
   xs: {
     width: "4px",
-  },
-  sm: {
-    width: "8px",
-  },
-  md: {
-    width: "16px",
-  },
-  lg: {
-    width: "32px",
-  },
-  xl: {
-    width: "64px",
-  },
-};
-
-const heightMap = {
-  xs: {
     height: "4px",
   },
   sm: {
+    width: "8px",
     height: "8px",
   },
   md: {
+    width: "16px",
     height: "16px",
   },
   lg: {
+    width: "32px",
     height: "32px",
   },
   xl: {
+    width: "64px",
     height: "64px",
   },
-}
+};
 
-function Separator({ width, height }) {
+function Separator({ size }) {
   return (
     <div
       style={{
-        ...widthMap[width],
-        ...heightMap[height],
+        ...sizeMap[size],
       }}
     />
   );
@@ -52,12 +38,10 @@ export default Separator;
 
 // Types of props expected
 Separator.propTypes = {
-  width: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
-  height: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
+  size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
 };
 
 // default of props for the parameters
 Separator.defaultProps = {
-  width: "md",
-  height: "md",
+  size: "md",
 };
