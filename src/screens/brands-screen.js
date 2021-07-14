@@ -4,53 +4,112 @@ import Separator from "../components/separator";
 import Table from "../components/table";
 import Button from "../components/button";
 import Container from "../components/container";
+import Modal from "../components/modal";
+import DeleteConfirmationModal from "../components/delete-confirmation-modal";
 import { Link } from "react-router-dom";
+import ReactNotifications from "react-notifications-component";
+import { store } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 
 function BrandsScreen() {
+  function successDelete() {
+    store.addNotification({
+      message: "Marca excluída com sucesso",
+      type: "success",
+      container: "top-center",
+      dismiss: {
+        duration: 3000,
+      },
+    });
+  }
+
   const [brands, setBrands] = React.useState([]);
+  const [deletingBrand, setDeletingBrand] = React.useState();
+
+  function getBrands() {
+    fetch("http://localhost:8080/brands").then((result) => {
+      result.json().then((data) => {
+        setBrands(data);
+      });
+    });
+  }
 
   React.useEffect(() => {
-      fetch("http://localhost:8080/brands").then((result) => {
-          result.json().then((data) => {
-              setBrands(data);
-          });
-      });
+    getBrands();
   }, []);
+
+  function onRequestClose() {
+    setDeletingBrand(undefined);
+  }
 
   return (
     <>
+      <ReactNotifications />
       <Menu />
       <Separator />
-      <div style={{ display: "flex", justifyContent: "space-between", padding: "50px" }}>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "50px",
+        }}
+      >
         <div>
           <h1>Marcas</h1>
         </div>
         <div>
-          <Link to="novaMarca">
+          <Link to="marcas/nova">
             <Button>Nova Marca</Button>
           </Link>
         </div>
       </div>
-
-      <Separator />
       <Container>
-      <Table data={brands} columns={[
-          {path: "id", label: "#", width: "10%"},
-          {path: "name", label: "label", width: "85%"},
-          {
+        <Table
+          data={brands}
+          columns={[
+            { path: "id", label: "#", width: "10%" },
+            { path: "name", label: "label", width: "85%" },
+            {
               path: "",
               label: "Ações",
-              render: () => (
-                  <div style={{display: "flex"}}>
-                      <Button >Editar</Button>
-                      <Separator size="sm" />
-                      <Button >Excluir</Button>
-                  </div>
+              render: ({ rowData }) => (
+                <div style={{ display: "flex" }}>
+                  <Link to={`/marcas/${rowData.id}`}>
+                    <Button>Editar</Button>
+                  </Link>
+                  <Separator size="sm" />
+                  <Button
+                    intent="secondary"
+                    onClick={() => {
+                      setDeletingBrand(rowData);
+                    }}
+                  >
+                    Excluir
+                  </Button>
+                </div>
               ),
-          },
-      ]}
-      />
+            },
+          ]}
+        />
       </Container>
+      <Modal
+        visible={!!deletingBrand}
+        onRequestClose={() => {
+          onRequestClose();
+        }}
+      >
+        {deletingBrand ? (
+          <DeleteConfirmationModal
+            brand={deletingBrand}
+            onCancel={() => onRequestClose()}
+            onSuccess={() => {
+              getBrands();
+              onRequestClose();
+              successDelete();
+            }}
+          />
+        ) : null}
+      </Modal>
     </>
   );
 }

@@ -16,13 +16,16 @@ const Routes = () => {
         <Route exact path="/">
           <Redirect to="/carros" />
         </Route>
-        <Route path="/marcas">
+        <Route exact path="/marcas">
           <BrandsScreen />
         </Route>
-        <Route path="/carros">
+        <Route exact path="/carros">
           <CarsScreen />
         </Route>
-        <Route path="/novaMarca">
+        <Route exact path="/marcas/nova">
+          <NewBrand />
+        </Route>
+        <Route exact path="/marcas/:id">
           <NewBrand />
         </Route>
       </Switch>

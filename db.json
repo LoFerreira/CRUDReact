@@ -1,23 +1,69 @@
 {
-  "cars": [
-    {
-      "name": "Gol",
-      "brandId": 1,
-      "id": 1
-    }
-  ],
+  "cars": [],
   "brands": [
     {
+      "name": "Tesla",
+      "id": 5
+    },
+    {
       "name": "Fiat",
-      "id": 1
+      "id": 6
     },
     {
-      "name": "BMW",
-      "id": 2
+      "name": "Tesla",
+      "id": 7
     },
     {
-      "name": "Audi",
-      "id": 3
+      "name": "Tesla",
+      "id": 10
+    },
+    {
+      "name": "Tesla",
+      "id": 11
+    },
+    {
+      "name": "Tesla",
+      "id": 12
+    },
+    {
+      "name": "Tesla",
+      "id": 13
+    },
+    {
+      "name": "",
+      "id": 15
+    },
+    {
+      "name": "",
+      "id": 17
+    },
+    {
+      "name": "",
+      "id": 18
+    },
+    {
+      "name": "",
+      "id": 19
+    },
+    {
+      "name": "",
+      "id": 20
+    },
+    {
+      "name": "",
+      "id": 21
+    },
+    {
+      "name": "Leleo",
+      "id": 22
+    },
+    {
+      "name": "ff",
+      "id": 23
+    },
+    {
+      "name": "das",
+      "id": 24
     }
   ]
 }
