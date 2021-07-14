@@ -10,6 +10,14 @@
     {
       "name": "Fiat",
       "id": 1
+    },
+    {
+      "name": "BMW",
+      "id": 2
+    },
+    {
+      "name": "Audi",
+      "id": 3
     }
   ]
 }

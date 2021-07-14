@@ -76,7 +76,8 @@ function Button({
         ...sizeMap[size],
         ...variantMap[variant][intent],
         boxShadow: "2px 2px black",
-        ...displayMap[display]
+        ...displayMap[display],
+        cursor: "pointer",
       }}
     >
       {pending ? "Loading..." : children}

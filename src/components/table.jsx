@@ -21,7 +21,7 @@ function Table({ data, columns, rowKey }) {
                   {column.render({ rowData, index })}
                 </td>
               ) : (
-                <td key={column.path} style={{ padding: 10 }}>
+                <td key={column.path} style={{ padding: 10, width: column.width }}>
                   {rowData[column.path]}
                 </td>
               )

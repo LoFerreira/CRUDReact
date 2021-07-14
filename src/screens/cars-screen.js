@@ -11,6 +11,7 @@ import Container from "../components/container";
 import ReactNotifications from "react-notifications-component";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
+import { Link } from "react-router-dom";
 
 function CarsScreen() {
   const [plate, setPlate] = React.useState("");
@@ -44,7 +45,7 @@ function CarsScreen() {
         duration: 3000,
       },
     });
-  };
+  }
 
   function delet() {
     store.addNotification({
@@ -55,92 +56,102 @@ function CarsScreen() {
         duration: 3000,
       },
     });
-  };
+  }
 
-    return (
-      <>
+  return (
+    <>
       <ReactNotifications />
-        <Menu />
-        <Separator />
-        <Button onClick={delet}>Excluir</Button>
-        <Button onClick={success}>Adicionar</Button>
-        <div style={{ display: "flex", flexDirection: "row", marginLeft: 50 }}>
-          <div style={{ border: "1px solid black", padding: 10 }}>
-            <Label htmlFor="plate" children="Filtrar por placa:" />
-            <Separator size="xs" />
-            <Input
-              id="plate"
-              value={plate}
-              onChange={(value) => setPlate(value)}
-              placeholder="XXX-0000"
-              type="text"
-            />
-          </div>
-          <Separator size="lg" />
-          <div style={{ border: "1px solid black", padding: 10 }}>
-            <Label htmlFor="brand" children="Filtrar por marca:" />
-            <Separator size="xs" />
-            <Select
-              value={selectedBrand}
-              options={optionsBrand}
-              onChange={setSelectedBrand}
-            />
-          </div>
+      <Menu />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          padding: "50px",
+        }}
+      >
+        <div>
+          <h1>Carros</h1>
+        </div>
+        <div>
+          <Link to="#">
+            <Button>Novo Carro</Button>
+          </Link>
+        </div>
+      </div>
+
+      <div style={{ display: "flex", flexDirection: "row", marginLeft: 50 }}>
+        <div style={{ border: "1px solid black", padding: 10 }}>
+          <Label htmlFor="plate" children="Filtrar por placa:" />
+          <Separator size="xs" />
+          <Input
+            id="plate"
+            value={plate}
+            onChange={(value) => setPlate(value)}
+            placeholder="XXX-0000"
+            type="text"
+          />
         </div>
         <Separator size="lg" />
-        <Modal
-          visible={Boolean(deletingPerson)}
-          onRequestClose={() => setDeletingPerson(null)}
-        >
-          Tem certeza que deseja excluir: {deletingPerson?.name}??
-          <div>
-            <Button
-              onClick={() => {
-                setPeople((currentState) =>
-                  currentState.filter(
-                    (person) => person.id !== deletingPerson.id
-                  )
-                );
-                setDeletingPerson(null);
-                delet();
-              }}
-            >
-              Sim
-            </Button>
-            <Button onClick={() => setDeletingPerson(null)}>Não</Button>
-          </div>
-        </Modal>
-
-        <Container>
-          <Table
-            columns={[
-              { path: "name", label: "Nome" },
-              { path: "age", label: "Idade" },
-              {
-                path: "actions",
-                label: "Ações",
-                render: ({ rowData, index }) => {
-                  return (
-                    <div style={{ display: "flex", flexDirection: "row" }}>
-                      <Button>Editar</Button>
-                      <Separator size="md" />
-                      <Button
-                        intent="secondary"
-                        onClick={() => setDeletingPerson(rowData)}
-                      >
-                        Excluir
-                      </Button>
-                    </div>
-                  );
-                },
-              },
-            ]}
-            data={people}
+        <div style={{ border: "1px solid black", padding: 10 }}>
+          <Label htmlFor="brand" children="Filtrar por marca:" />
+          <Separator size="xs" />
+          <Select
+            value={selectedBrand}
+            options={optionsBrand}
+            onChange={setSelectedBrand}
           />
-        </Container>
-      </>
-    );
+        </div>
+      </div>
+
+      <Container>
+        <Table
+          columns={[
+            { path: "name", label: "Nome", width: "60%" },
+            { path: "age", label: "Idade", width: "30%" },
+            {
+              path: "actions",
+              label: "Ações",
+              render: ({ rowData, index }) => {
+                return (
+                  <div style={{ display: "flex", flexDirection: "row" }}>
+                    <Button>Editar</Button>
+                    <Separator size="md" />
+                    <Button
+                      intent="secondary"
+                      onClick={() => setDeletingPerson(rowData)}
+                    >
+                      Excluir
+                    </Button>
+                  </div>
+                );
+              },
+            },
+          ]}
+          data={people}
+        />
+      </Container>
+      <Modal
+        visible={Boolean(deletingPerson)}
+        onRequestClose={() => setDeletingPerson(null)}
+      >
+        Tem certeza que deseja excluir: {deletingPerson?.name}??
+        <div>
+          <Button
+            onClick={() => {
+              setPeople((currentState) =>
+                currentState.filter((person) => person.id !== deletingPerson.id)
+              );
+              setDeletingPerson(null);
+              delet();
+            }}
+          >
+            Sim
+          </Button>
+          <Button onClick={() => setDeletingPerson(null)}>Não</Button>
+        </div>
+      </Modal>
+    </>
+  );
 }
 
 export default CarsScreen;
-  

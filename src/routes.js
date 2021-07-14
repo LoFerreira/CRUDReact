@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import BrandsScreen from "./screens/brands-screen";
 import CarsScreen from "./screens/cars-screen";
+import NewBrand from "./screens/new-brands-screen";
 
 const Routes = () => {
   return (
@@ -20,6 +21,9 @@ const Routes = () => {
         </Route>
         <Route path="/carros">
           <CarsScreen />
+        </Route>
+        <Route path="/novaMarca">
+          <NewBrand />
         </Route>
       </Switch>
     </Router>

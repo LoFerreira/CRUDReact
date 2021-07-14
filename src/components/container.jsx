@@ -6,9 +6,7 @@ const Container = ({ children }) => {
       style={{
         display: "flex",
         flexDirection: "column",
-        height: "70vh",
-        marginLeft: 50,
-        marginRight: 50,
+        padding: 50,
       }}
     >
       {children}
