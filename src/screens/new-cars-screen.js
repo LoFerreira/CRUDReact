@@ -5,6 +5,9 @@ import Separator from "../components/separator";
 import Label from "../components/label";
 import Input from "../components/input";
 import { useHistory } from "react-router";
+import ReactNotifications from "react-notifications-component";
+import { store } from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 
 function NewCar() {
   const [addPlate, setAddPlate] = React.useState("");
@@ -12,8 +15,21 @@ function NewCar() {
   const [addColor, setAddColor] = React.useState("");
   const { goBack } = useHistory();
 
+   /* function success() {
+    store.addNotification({
+      message: "carro adicionado com sucesso",
+      type: "success",
+      container: "top-center",
+      dismiss: {
+        duration: 3000,
+      },
+    });
+  } */
+
+
   return (
     <>
+    <ReactNotifications />
       <Menu />
       <Separator />
       <div style={{ padding: "50px" }}>

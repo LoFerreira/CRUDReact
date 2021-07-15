@@ -17,44 +17,28 @@ function CarsScreen() {
   const [plate, setPlate] = React.useState("");
   const [selectedBrand, setSelectedBrand] = React.useState(2);
   const [cars, setCars] = React.useState([]);
-  const [deletingPerson, setDeletingPerson] = React.useState();
-
-  // Request get for db.jason with the brands
-  const brands = [
-    { id: 1, name: "Citroen" },
-    { id: 2, name: "Volkswagen" },
-  ];
+  const [deletingCar, setDeletingCar] = React.useState();
 
   function getCars() {
     fetch("http://localhost:8080/cars?_expand=brand").then((result) => {
       result.json().then((data) => {
         setCars(data);
-        console.log(data);
       });
     });
   }
 
   React.useEffect(() => {
     getCars();
-    console.log(cars[0]);
   }, []);
 
-  const optionsBrand = brands.map((brand) => ({
-    value: brand.id,
-    label: brand.name,
+  const optionsBrand = cars.map((cars) => ({
+    id: cars.id,
+    plate: cars.plate,
+    color: cars.color,
+    value: cars.brand.id,
+    label: cars.brand.name,
   }));
 
-  /* function success() {
-    store.addNotification({
-      message: "carro adicionado com sucesso",
-      type: "success",
-      container: "top-center",
-      dismiss: {
-        duration: 3000,
-      },
-    });
-  }
- */
   function delet() {
     store.addNotification({
       message: "carro excluido com sucesso",
@@ -113,11 +97,11 @@ function CarsScreen() {
 
       <Container>
         <Table
-          data={cars}
+          data={ optionsBrand }
           columns={[
             { path: "plate", label: "Placa", width: "30%" },
             { path: "color", label: "Cor", width: "30%" },
-            { path: "brandId", label: "Marca", width: "30%" },
+            { path: "label", label: "Marca", width: "30%" },
             {
               path: "actions",
               label: "Ações",
@@ -128,7 +112,7 @@ function CarsScreen() {
                     <Separator size="md" />
                     <Button
                       intent="secondary"
-                      onClick={() => setDeletingPerson(rowData)}
+                      onClick={() => {setDeletingCar(rowData); console.log(rowData)}}
                     >
                       Excluir
                     </Button>
@@ -140,23 +124,19 @@ function CarsScreen() {
         />
       </Container>
       <Modal
-        visible={Boolean(deletingPerson)}
-        onRequestClose={() => setDeletingPerson(null)}
+        visible={Boolean(deletingCar)}
+        onRequestClose={() => setDeletingCar(null)}
       >
-        Tem certeza que deseja excluir: {deletingPerson?.name}??
+        Tem certeza que deseja excluir o carro de placa: {deletingCar?.plate}??
         <div>
           <Button
             onClick={() => {
-              setCars((currentState) =>
-                currentState.filter((person) => person.id !== deletingPerson.id)
-              );
-              setDeletingPerson(null);
-              delet();
+              fetch(`http://localhost:8080/cars/${deletingCar.id}`, {method: "DELETE",}).then(() => {delet(); getCars(); setDeletingCar(null);})
             }}
           >
-            Sim
+            Excluir
           </Button>
-          <Button onClick={() => setDeletingPerson(null)}>Não</Button>
+          <Button onClick={() => setDeletingCar(null)}>Cancelar</Button>
         </div>
       </Modal>
     </>
