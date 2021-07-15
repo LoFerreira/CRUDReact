@@ -74,7 +74,7 @@ function NewBrand() {
       <Menu />
       <Separator />
       <div style={{ padding: "50px" }}>
-        <h1>Nova Marca</h1>
+        <h1>{id ? "Editar Marca" : "Nova Marca"}</h1>
         <Separator size="xl" />
         <form
           onSubmit={(e) => {

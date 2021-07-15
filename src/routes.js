@@ -8,6 +8,7 @@ import {
 import BrandsScreen from "./screens/brands-screen";
 import CarsScreen from "./screens/cars-screen";
 import NewBrand from "./screens/new-brands-screen";
+import NewCar from "./screens/new-cars-screen"
 
 const Routes = () => {
   return (
@@ -22,7 +23,10 @@ const Routes = () => {
         <Route exact path="/carros">
           <CarsScreen />
         </Route>
-        <Route exact path="/marcas/nova">
+        <Route exact path="/carros/novo">
+          <NewCar />
+        </Route>
+        <Route exact path="/marcas/novo">
           <NewBrand />
         </Route>
         <Route exact path="/marcas/:id">

@@ -1,5 +1,24 @@
 {
-  "cars": [],
+  "cars": [
+    {
+      "plate": "xxx-0000",
+      "color": "black",
+      "brandId": 5,
+      "id": 1
+    },
+    {
+      "plate": "xxx-0110",
+      "color": "green",
+      "brandId": 15,
+      "id": 2
+    },
+    {
+      "plate": "xyz-0110",
+      "color": "blue",
+      "brandId": 6,
+      "id": 3
+    }
+  ],
   "brands": [
     {
       "name": "Tesla",
@@ -30,40 +49,14 @@
       "id": 13
     },
     {
-      "name": "",
+      "plate": "xxx-0000",
+      "color": "black",
+      "brandId": 5,
+      "id": 14
+    },
+    {
+      "name": "Volkswagen",
       "id": 15
-    },
-    {
-      "name": "",
-      "id": 17
-    },
-    {
-      "name": "",
-      "id": 18
-    },
-    {
-      "name": "",
-      "id": 19
-    },
-    {
-      "name": "",
-      "id": 20
-    },
-    {
-      "name": "",
-      "id": 21
-    },
-    {
-      "name": "Leleo",
-      "id": 22
-    },
-    {
-      "name": "ff",
-      "id": 23
-    },
-    {
-      "name": "das",
-      "id": 24
     }
   ]
 }

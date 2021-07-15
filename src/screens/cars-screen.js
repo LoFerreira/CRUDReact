@@ -16,13 +16,7 @@ import { Link } from "react-router-dom";
 function CarsScreen() {
   const [plate, setPlate] = React.useState("");
   const [selectedBrand, setSelectedBrand] = React.useState(2);
-  const [people, setPeople] = React.useState([
-    { id: 1, name: "Leonardo", age: 20 },
-    { id: 2, name: "Felicio", age: 21 },
-    { id: 3, name: "Felicio", age: 44 },
-    { id: 4, name: "Queli", age: 43 },
-    { id: 5, name: "xinino", age: 10 },
-  ]);
+  const [cars, setCars] = React.useState([]);
   const [deletingPerson, setDeletingPerson] = React.useState();
 
   // Request get for db.jason with the brands
@@ -31,12 +25,26 @@ function CarsScreen() {
     { id: 2, name: "Volkswagen" },
   ];
 
+  function getCars() {
+    fetch("http://localhost:8080/cars?_expand=brand").then((result) => {
+      result.json().then((data) => {
+        setCars(data);
+        console.log(data);
+      });
+    });
+  }
+
+  React.useEffect(() => {
+    getCars();
+    console.log(cars[0]);
+  }, []);
+
   const optionsBrand = brands.map((brand) => ({
     value: brand.id,
     label: brand.name,
   }));
 
-  function success() {
+  /* function success() {
     store.addNotification({
       message: "carro adicionado com sucesso",
       type: "success",
@@ -46,7 +54,7 @@ function CarsScreen() {
       },
     });
   }
-
+ */
   function delet() {
     store.addNotification({
       message: "carro excluido com sucesso",
@@ -73,7 +81,7 @@ function CarsScreen() {
           <h1>Carros</h1>
         </div>
         <div>
-          <Link to="#">
+          <Link to="carros/novo">
             <Button>Novo Carro</Button>
           </Link>
         </div>
@@ -105,13 +113,15 @@ function CarsScreen() {
 
       <Container>
         <Table
+          data={cars}
           columns={[
-            { path: "name", label: "Nome", width: "60%" },
-            { path: "age", label: "Idade", width: "30%" },
+            { path: "plate", label: "Placa", width: "30%" },
+            { path: "color", label: "Cor", width: "30%" },
+            { path: "brandId", label: "Marca", width: "30%" },
             {
               path: "actions",
               label: "Ações",
-              render: ({ rowData, index }) => {
+              render: ({ rowData }) => {
                 return (
                   <div style={{ display: "flex", flexDirection: "row" }}>
                     <Button>Editar</Button>
@@ -127,7 +137,6 @@ function CarsScreen() {
               },
             },
           ]}
-          data={people}
         />
       </Container>
       <Modal
@@ -138,7 +147,7 @@ function CarsScreen() {
         <div>
           <Button
             onClick={() => {
-              setPeople((currentState) =>
+              setCars((currentState) =>
                 currentState.filter((person) => person.id !== deletingPerson.id)
               );
               setDeletingPerson(null);
