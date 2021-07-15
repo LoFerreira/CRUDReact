@@ -9,6 +9,8 @@ import ReactNotifications from "react-notifications-component";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { useParams } from "react-router-dom";
+import GetBrandByIdService from "../services/get-brand-by-id-service";
+import SaveBrandService from "../services/save-brand-service";
 
 function NewBrand() {
   const [addBrand, setAddBrand] = React.useState("");
@@ -24,7 +26,7 @@ function NewBrand() {
         duration: 3000,
       },
     });
-}
+  }
 
   function successEdit() {
     store.addNotification({
@@ -38,35 +40,25 @@ function NewBrand() {
   }
 
   function saveBrand() {
-      const url = id ? `http://localhost:8080/brands/${id}` : `http://localhost:8080/brands`;
+    const messageToast = () => {
+      id ? successEdit() : successCreate();
+    };
 
-      const method = id ? "PUT" : "POST";
-
-      const messageToast = () => { id ? successEdit() : successCreate();}
-
-      fetch(url, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: addBrand }),
-      }).then(() => {
-        messageToast();
-        setAddBrand("");
-        setAddBrandId("");
-      });
-  };
+    SaveBrandService({ id, name: addBrand }).then(() => {
+      messageToast();
+      setAddBrand("");
+      setAddBrandId("");
+    });
+  }
 
   React.useEffect(() => {
-      if (id) {
-          fetch(`http://localhost:8080/brands/${id}`).then((result) => {
-              result.json().then((data) => {
-                  setAddBrandId(data.id);
-                  setAddBrand(data.name);
-              });
-          });
-      }
-  }, [id])
+    if (id) {
+      GetBrandByIdService({ id }).then((data) => {
+        setAddBrandId(data.id);
+        setAddBrand(data.name);
+      });
+    }
+  }, [id]);
 
   return (
     <>
@@ -74,7 +66,7 @@ function NewBrand() {
       <Menu />
       <Separator />
       <div style={{ padding: "50px" }}>
-        <h1>{id ? "Editar Marca" : "Nova Marca"}</h1>
+        <h1>{addBrandId ? "Editar Marca" : "Nova Marca"}</h1>
         <Separator size="xl" />
         <form
           onSubmit={(e) => {
@@ -97,7 +89,7 @@ function NewBrand() {
           />
           <Separator size="lg" />
           <div style={{ display: "flex" }}>
-            <Button onClick={() => {}}>Salvar</Button>
+            <Button>Salvar</Button>
             <Separator />
             <Link to="/marcas">
               <Button>Voltar</Button>

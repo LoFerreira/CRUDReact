@@ -1,56 +1,66 @@
 {
   "cars": [
     {
-      "plate": "xxx-0110",
-      "color": "green",
+      "plate": "xyz-0000",
+      "color": "black",
       "brandId": 15,
       "id": 2
     },
     {
-      "plate": "xyz-0110",
-      "color": "blue",
-      "brandId": 6,
+      "plate": "xyz-1234",
+      "color": "black",
+      "brandId": 20,
       "id": 3
+    },
+    {
+      "plate": "abc-1234",
+      "color": "white",
+      "brandId": 21,
+      "id": 4
+    },
+    {
+      "plate": "abc-5432",
+      "color": "white",
+      "brandId": 16,
+      "id": 5
     }
   ],
   "brands": [
     {
-      "name": "Tesla",
-      "id": 5
-    },
-    {
-      "name": "Fiat",
-      "id": 6
-    },
-    {
-      "name": "Tesla",
-      "id": 7
-    },
-    {
-      "name": "Tesla",
-      "id": 10
-    },
-    {
-      "name": "Tesla",
-      "id": 11
-    },
-    {
-      "name": "Tesla",
-      "id": 12
-    },
-    {
-      "name": "Tesla",
-      "id": 13
-    },
-    {
-      "plate": "xxx-0000",
-      "color": "black",
-      "brandId": 5,
-      "id": 14
-    },
-    {
       "name": "Volkswagen",
       "id": 15
+    },
+    {
+      "name": "BMW",
+      "id": 16
+    },
+    {
+      "name": "Toyota",
+      "id": 17
+    },
+    {
+      "name": "Porsche",
+      "id": 18
+    },
+    {
+      "name": "Hyundai",
+      "id": 19
+    },
+    {
+      "name": "Toyota",
+      "id": 20
+    },
+    {
+      "name": "Nissan",
+      "id": 21
+    },
+    {
+      "name": "Toyota",
+      "id": 22
+    },
+    {
+      "name": "Toyota",
+      "id": 23
     }
   ]
 }

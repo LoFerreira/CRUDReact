@@ -6,8 +6,8 @@ import Label from "../components/label";
 import Input from "../components/input";
 import { useHistory } from "react-router";
 import ReactNotifications from "react-notifications-component";
-import { store } from "react-notifications-component";
-import "react-notifications-component/dist/theme.css";
+/* import { store } from "react-notifications-component";
+ */import "react-notifications-component/dist/theme.css";
 
 function NewCar() {
   const [addPlate, setAddPlate] = React.useState("");

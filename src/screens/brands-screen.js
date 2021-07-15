@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import ReactNotifications from "react-notifications-component";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
+import GetBrandService from "../services/get-brand-services";
 
 function BrandsScreen() {
   function successDelete() {
@@ -21,18 +22,16 @@ function BrandsScreen() {
         duration: 3000,
       },
     });
-  }
+  };
 
   const [brands, setBrands] = React.useState([]);
   const [deletingBrand, setDeletingBrand] = React.useState();
 
   function getBrands() {
-    fetch("http://localhost:8080/brands").then((result) => {
-      result.json().then((data) => {
-        setBrands(data);
-      });
-    });
-  }
+    GetBrandService().then((data) => {
+      setBrands(data);
+    })
+  };
 
   React.useEffect(() => {
     getBrands();

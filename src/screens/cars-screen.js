@@ -32,16 +32,20 @@ function CarsScreen() {
   }, []);
 
   const optionsBrand = cars.map((cars) => ({
-    id: cars.id,
-    plate: cars.plate,
-    color: cars.color,
     value: cars.brand.id,
     label: cars.brand.name,
   }));
 
-  function delet() {
+  const carsData = cars.map((cars) => ({
+    id: cars.id,
+    plate: cars.plate,
+    color: cars.color,
+    label: cars.brand.name,
+  }));
+
+  function showDeleteMessage() {
     store.addNotification({
-      message: "carro excluido com sucesso",
+      message: "carro excluído com sucesso!",
       type: "success",
       container: "top-center",
       dismiss: {
@@ -97,7 +101,7 @@ function CarsScreen() {
 
       <Container>
         <Table
-          data={ optionsBrand }
+          data={ carsData }
           columns={[
             { path: "plate", label: "Placa", width: "30%" },
             { path: "color", label: "Cor", width: "30%" },
@@ -131,7 +135,7 @@ function CarsScreen() {
         <div>
           <Button
             onClick={() => {
-              fetch(`http://localhost:8080/cars/${deletingCar.id}`, {method: "DELETE",}).then(() => {delet(); getCars(); setDeletingCar(null);})
+              fetch(`http://localhost:8080/cars/${deletingCar.id}`, {method: "DELETE",}).then(() => {showDeleteMessage(); getCars(); setDeletingCar(null);})
             }}
           >
             Excluir
