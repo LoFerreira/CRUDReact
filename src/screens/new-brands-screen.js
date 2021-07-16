@@ -45,6 +45,7 @@ function NewBrand() {
     };
 
     SaveBrandService({ id, name: addBrand }).then(() => {
+      
       messageToast();
       setAddBrand("");
       setAddBrandId("");

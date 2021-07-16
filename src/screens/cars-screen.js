@@ -12,6 +12,8 @@ import ReactNotifications from "react-notifications-component";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { Link } from "react-router-dom";
+import GetCarsServices from "../services/get-cars-service";
+import DeleteCarsServices from "../services/delete-cars-service";
 
 function CarsScreen() {
   const [plate, setPlate] = React.useState("");
@@ -20,11 +22,9 @@ function CarsScreen() {
   const [deletingCar, setDeletingCar] = React.useState();
 
   function getCars() {
-    fetch("http://localhost:8080/cars?_expand=brand").then((result) => {
-      result.json().then((data) => {
+   GetCarsServices().then((data) => {
         setCars(data);
       });
-    });
   }
 
   React.useEffect(() => {
@@ -135,7 +135,7 @@ function CarsScreen() {
         <div>
           <Button
             onClick={() => {
-              fetch(`http://localhost:8080/cars/${deletingCar.id}`, {method: "DELETE",}).then(() => {showDeleteMessage(); getCars(); setDeletingCar(null);})
+              DeleteCarsServices(deletingCar).then(() => {showDeleteMessage(); getCars(); setDeletingCar(null);})
             }}
           >
             Excluir

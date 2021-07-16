@@ -1,16 +1,10 @@
 {
   "cars": [
     {
-      "plate": "xyz-0000",
-      "color": "black",
-      "brandId": 15,
-      "id": 2
-    },
-    {
-      "plate": "xyz-1234",
-      "color": "black",
-      "brandId": 20,
-      "id": 3
+      "plate": "abc-1234",
+      "color": "white",
+      "brandId": 21,
+      "id": 4
     },
     {
       "plate": "abc-1234",
