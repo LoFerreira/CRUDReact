@@ -12,25 +12,14 @@ import { useParams } from "react-router-dom";
 import GetBrandByIdService from "../services/get-brand-by-id-service";
 import SaveBrandService from "../services/save-brand-service";
 
-function NewBrand() {
-  const [addBrand, setAddBrand] = React.useState("");
-  const [addBrandId, setAddBrandId] = React.useState("");
-  const { id } = useParams();
+function BrandFormScreen() {
+  const [brandName, setBrandName] = React.useState("");
+  const [brandId, setBrandId] = React.useState("");
+  const { id: idFromRoute } = useParams();
 
-  function successCreate() {
+  function showToast({ message }) {
     store.addNotification({
-      message: "Nova marca adicionada com sucesso",
-      type: "success",
-      container: "top-center",
-      dismiss: {
-        duration: 3000,
-      },
-    });
-  }
-
-  function successEdit() {
-    store.addNotification({
-      message: "Marca editada com sucesso",
+      message,
       type: "success",
       container: "top-center",
       dismiss: {
@@ -40,26 +29,23 @@ function NewBrand() {
   }
 
   function saveBrand() {
-    const messageToast = () => {
-      id ? successEdit() : successCreate();
-    };
-
-    SaveBrandService({ id, name: addBrand }).then(() => {
-      
-      messageToast();
-      setAddBrand("");
-      setAddBrandId("");
+    SaveBrandService({ id: idFromRoute, name: brandName }).then(() => {
+      showToast({
+        message: `Marca ${idFromRoute ? "editada" : "adicionada"} com sucesso!`,
+      });
+      setBrandName("");
+      setBrandId("");
     });
   }
 
   React.useEffect(() => {
-    if (id) {
-      GetBrandByIdService({ id }).then((data) => {
-        setAddBrandId(data.id);
-        setAddBrand(data.name);
+    if (idFromRoute) {
+      GetBrandByIdService({ id: idFromRoute }).then((data) => {
+        setBrandId(data.id);
+        setBrandName(data.name);
       });
     }
-  }, [id]);
+  }, [idFromRoute]);
 
   return (
     <>
@@ -67,7 +53,7 @@ function NewBrand() {
       <Menu />
       <Separator />
       <div style={{ padding: "50px" }}>
-        <h1>{addBrandId ? "Editar Marca" : "Nova Marca"}</h1>
+        <h1>{brandId ? "Editar Marca" : "Nova Marca"}</h1>
         <Separator size="xl" />
         <form
           onSubmit={(e) => {
@@ -77,14 +63,14 @@ function NewBrand() {
         >
           <Label htmlFor="id" children="Id:"></Label>
           <Separator size="xs" />
-          <Input id="id" value={addBrandId} type="text" disabled="disabled" />
+          <Input id="id" value={brandId} type="text" disabled="disabled" />
           <Separator size="lg" />
           <Label htmlFor="newBrand" children="Marca:"></Label>
           <Separator size="xs" />
           <Input
             id="newBrand"
-            value={addBrand}
-            onChange={(value) => setAddBrand(value)}
+            value={brandName}
+            onChange={(value) => setBrandName(value)}
             type="text"
             required
           />
@@ -102,4 +88,4 @@ function NewBrand() {
   );
 }
 
-export default NewBrand;
+export default BrandFormScreen;
