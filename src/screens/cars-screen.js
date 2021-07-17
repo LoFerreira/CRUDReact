@@ -4,7 +4,6 @@ import Button from "../components/button";
 import Separator from "../components/separator";
 import Input from "../components/input";
 import Modal from "../components/modal";
-import Select from "../components/select";
 import Table from "../components/table";
 import Label from "../components/label";
 import Container from "../components/container";

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import BrandsScreen from "./screens/brands-screen";
 import CarsScreen from "./screens/cars-screen";
-import NewBrand from "./screens/brand-form-screen";
+import BrandFormScreen  from "./screens/brand-form-screen";
 import NewCar from "./screens/car-form-screen"
 
 const Routes = () => {
@@ -27,10 +27,10 @@ const Routes = () => {
           <NewCar />
         </Route>
         <Route exact path="/marcas/nova">
-          <NewBrand />
+          <BrandFormScreen  />
         </Route>
         <Route exact path="/marcas/:id">
-          <NewBrand />
+          <BrandFormScreen  />
         </Route>
       </Switch>
     </Router>

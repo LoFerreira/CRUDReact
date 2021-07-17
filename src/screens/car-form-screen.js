@@ -12,7 +12,6 @@ import SelectBrand from "../components/select-brand";
 
 function NewCar() {
   const [addPlate, setAddPlate] = React.useState("");
-  const [addBrand, setAddBrand] = React.useState("");
   const [addColor, setAddColor] = React.useState("");
   const [selectedBrand, setSelectedBrand] = React.useState("");
   const { goBack } = useHistory();
