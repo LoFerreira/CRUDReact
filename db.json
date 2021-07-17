@@ -21,7 +21,7 @@
   ],
   "brands": [
     {
-      "name": "Volkswagennnn",
+      "name": "Volkswagen",
       "id": 15
     },
     {
@@ -55,6 +55,10 @@
     {
       "name": "Toyota",
       "id": 23
+    },
+    {
+      "name": "Peugeot",
+      "id": 24
     }
   ]
 }

@@ -7,15 +7,17 @@ import Input from "../components/input";
 import { useHistory } from "react-router";
 import ReactNotifications from "react-notifications-component";
 /* import { store } from "react-notifications-component";
- */import "react-notifications-component/dist/theme.css";
+ */ import "react-notifications-component/dist/theme.css";
+import SelectBrand from "../components/select-brand";
 
 function NewCar() {
   const [addPlate, setAddPlate] = React.useState("");
   const [addBrand, setAddBrand] = React.useState("");
   const [addColor, setAddColor] = React.useState("");
+  const [selectedBrand, setSelectedBrand] = React.useState("");
   const { goBack } = useHistory();
 
-   /* function success() {
+  /* function success() {
     store.addNotification({
       message: "carro adicionado com sucesso",
       type: "success",
@@ -26,10 +28,9 @@ function NewCar() {
     });
   } */
 
-
   return (
     <>
-    <ReactNotifications />
+      <ReactNotifications />
       <Menu />
       <Separator />
       <div style={{ padding: "50px" }}>
@@ -50,17 +51,14 @@ function NewCar() {
             placeholder="xxx-0000"
             required
           />
-          <Separator />
+          <Separator size="lg"/>
           <Label htmlFor="brand" children="Marca:" />
           <Separator size="xs" />
-          <Input
-            id="brand"
-            value={addBrand}
-            onChange={(value) => setAddBrand(value)}
-            type="text"
-            required
+          <SelectBrand
+            value={selectedBrand?.id}
+            onChange={(marca) => setSelectedBrand(marca)}
           />
-          <Separator />
+          <Separator size="lg" />
           <Label htmlFor="color" children="Cor:" />
           <Separator size="xs" />
           <Input
@@ -74,7 +72,13 @@ function NewCar() {
           <div style={{ display: "flex" }}>
             <Button onClick={() => {}}>Salvar</Button>
             <Separator />
-            <Button onClick={() => {goBack()}}>Voltar</Button>
+            <Button
+              onClick={() => {
+                goBack();
+              }}
+            >
+              Voltar
+            </Button>
           </div>
         </form>
       </div>

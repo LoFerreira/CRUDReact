@@ -14,18 +14,13 @@ import "react-notifications-component/dist/theme.css";
 import { Link } from "react-router-dom";
 import deleteCarsServices from "../services/delete-car-service";
 import useCars from "../hooks/use-cars";
+import SelectBrand from "../components/select-brand";
 
 function CarsScreen() {
   const [plate, setPlate] = React.useState("");
-  const [selectedBrand, setSelectedBrand] = React.useState(2);
+  const [selectedBrand, setSelectedBrand] = React.useState(null);
   const [deletingCar, setDeletingCar] = React.useState();
   const { cars } = useCars();
-
-  //SELECT COMPONENT
-  const optionsBrand = cars.map((cars) => ({
-    value: cars.brand.id,
-    label: cars.brand.name,
-  }));
 
   const carsData = cars.map((cars) => ({
     id: cars.id,
@@ -83,10 +78,9 @@ function CarsScreen() {
         <div style={{ border: "1px solid black", padding: 10 }}>
           <Label htmlFor="brand" children="Filtrar por marca:" />
           <Separator size="xs" />
-          <Select
-            value={selectedBrand}
-            options={optionsBrand}
-            onChange={setSelectedBrand}
+          <SelectBrand 
+            value={selectedBrand?.id}
+            onChange={(marca) => setSelectedBrand(marca)}
           />
         </div>
       </div>
