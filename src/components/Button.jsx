@@ -29,7 +29,7 @@ const variantMap = {
     primary: {},
     secondary: {
       backgroundColor: "red",
-    }
+    },
   },
   outline: {
     primary: {
@@ -47,17 +47,24 @@ const variantMap = {
     primary: {
       background: "none",
       border: "none",
-    }
+    },
   },
 };
 
 const displayMap = {
   displayNone: {
-    display: "none"
+    display: "none",
   },
   displayHidden: {},
 };
 
+const fontSizeMap = {
+  xs: {fontSize: "14px"},
+  sm: {fontSize: "16px"},
+  md: {fontSize: "18px"},
+  lg: {fontSize: "20px"},
+  xl: {fontSize: "25px"},
+};
 function Button({
   children,
   onClick,
@@ -67,6 +74,7 @@ function Button({
   variant,
   intent,
   display,
+  fontSize,
 }) {
   return (
     <button
@@ -77,6 +85,7 @@ function Button({
         ...variantMap[variant][intent],
         boxShadow: "2px 2px black",
         ...displayMap[display],
+        ...fontSizeMap[fontSize],
         cursor: "pointer",
       }}
     >
@@ -95,6 +104,7 @@ Button.propTypes = {
   pending: PropTypes.bool,
   size: PropTypes.oneOf(["xs", "sm", "md", "lg", "xl"]),
   intent: PropTypes.oneOf(["primary", "secondary"]),
+  fontSize: PropTypes.oneOf([["xs", "sm", "md", "lg", "xl"]]),
 };
 
 // default of props for the parameters
@@ -103,4 +113,5 @@ Button.defaultProps = {
   pending: false,
   variant: "solid",
   intent: "primary",
+  fontSize: "md",
 };

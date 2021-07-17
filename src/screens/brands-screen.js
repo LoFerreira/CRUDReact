@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import ReactNotifications from "react-notifications-component";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
-import GetBrandService from "../services/get-brand-services";
+import GetBrandService from "../services/get-brands-service";
 
 function BrandsScreen() {
   function successDelete() {
@@ -58,7 +58,7 @@ function BrandsScreen() {
         </div>
         <div>
           <Link to="marcas/nova">
-            <Button>Nova Marca</Button>
+            <Button fontSize="xl">Nova Marca</Button>
           </Link>
         </div>
       </div>

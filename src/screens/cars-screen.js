@@ -13,7 +13,7 @@ import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { Link } from "react-router-dom";
 import GetCarsServices from "../services/get-cars-service";
-import DeleteCarsServices from "../services/delete-cars-service";
+import DeleteCarsServices from "../services/delete-car-service";
 
 function CarsScreen() {
   const [plate, setPlate] = React.useState("");
@@ -58,6 +58,7 @@ function CarsScreen() {
     <>
       <ReactNotifications />
       <Menu />
+      <Separator />
       <div
         style={{
           display: "flex",
@@ -70,7 +71,7 @@ function CarsScreen() {
         </div>
         <div>
           <Link to="carros/novo">
-            <Button>Novo Carro</Button>
+            <Button fontSize="xl">Novo Carro</Button>
           </Link>
         </div>
       </div>
