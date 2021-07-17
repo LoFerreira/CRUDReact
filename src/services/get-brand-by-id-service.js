@@ -1,7 +1,7 @@
 import Api from "./api";
 
-function GetBrandByIdService({ id }) {
+function getBrandByIdService({ id }) {
   return Api({ url: `/brands/${id}` });
 }
 
-export default GetBrandByIdService;
+export default getBrandByIdService;

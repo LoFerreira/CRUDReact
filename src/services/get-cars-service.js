@@ -1,7 +1,7 @@
 import Api from "./api";
 
-function GetCarsServices() {
+function getCarsServices() {
   return Api({ url: "/cars?_expand=brand" });
 }
 
-export default GetCarsServices;
+export default getCarsServices;

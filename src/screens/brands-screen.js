@@ -10,9 +10,12 @@ import { Link } from "react-router-dom";
 import ReactNotifications from "react-notifications-component";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
-import GetBrandService from "../services/get-brands-service";
+import useBrands from "../hooks/use-brands";
 
 function BrandsScreen() {
+  const { brands } = useBrands();
+  const [deletingBrand, setDeletingBrand] = React.useState();
+
   function successDelete() {
     store.addNotification({
       message: "Marca excluída com sucesso",
@@ -22,20 +25,7 @@ function BrandsScreen() {
         duration: 3000,
       },
     });
-  };
-
-  const [brands, setBrands] = React.useState([]);
-  const [deletingBrand, setDeletingBrand] = React.useState();
-
-  function getBrands() {
-    GetBrandService().then((data) => {
-      setBrands(data);
-    })
-  };
-
-  React.useEffect(() => {
-    getBrands();
-  }, []);
+  }
 
   function onRequestClose() {
     setDeletingBrand(undefined);
@@ -102,7 +92,7 @@ function BrandsScreen() {
             brand={deletingBrand}
             onCancel={() => onRequestClose()}
             onSuccess={() => {
-              getBrands();
+              brands();
               onRequestClose();
               successDelete();
             }}

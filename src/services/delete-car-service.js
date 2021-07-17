@@ -1,9 +1,9 @@
 import Api from "./api";
 
-function DeleteCarsServices({ id }) {
+function deleteCarsServices({ id }) {
   return (
       Api({ url: `/cars/${id}`, method: "DELETE" })
       )
 }
 
-export default DeleteCarsServices;
+export default deleteCarsServices;

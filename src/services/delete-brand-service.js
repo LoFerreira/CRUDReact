@@ -1,9 +1,9 @@
 import Api from "./api";
 
-function DeleteBrandService({ id }) {
+function deleteBrandService({ id }) {
   return (
       Api({ url: `/brands/${id}`, method: "DELETE" })
       )
 }
 
-export default DeleteBrandService;
+export default deleteBrandService;

@@ -12,25 +12,16 @@ import ReactNotifications from "react-notifications-component";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { Link } from "react-router-dom";
-import GetCarsServices from "../services/get-cars-service";
-import DeleteCarsServices from "../services/delete-car-service";
+import deleteCarsServices from "../services/delete-car-service";
+import useCars from "../hooks/use-cars";
 
 function CarsScreen() {
   const [plate, setPlate] = React.useState("");
   const [selectedBrand, setSelectedBrand] = React.useState(2);
-  const [cars, setCars] = React.useState([]);
   const [deletingCar, setDeletingCar] = React.useState();
+  const { cars } = useCars();
 
-  function getCars() {
-   GetCarsServices().then((data) => {
-        setCars(data);
-      });
-  }
-
-  React.useEffect(() => {
-    getCars();
-  }, []);
-
+  //SELECT COMPONENT
   const optionsBrand = cars.map((cars) => ({
     value: cars.brand.id,
     label: cars.brand.name,
@@ -43,7 +34,7 @@ function CarsScreen() {
     label: cars.brand.name,
   }));
 
-  function showDeleteMessage() {
+  function showToastDelete() {
     store.addNotification({
       message: "carro excluído com sucesso!",
       type: "success",
@@ -117,7 +108,7 @@ function CarsScreen() {
                     <Separator size="md" />
                     <Button
                       intent="secondary"
-                      onClick={() => {setDeletingCar(rowData); console.log(rowData)}}
+                      onClick={() => {setDeletingCar(rowData)}}
                     >
                       Excluir
                     </Button>
@@ -136,7 +127,7 @@ function CarsScreen() {
         <div>
           <Button
             onClick={() => {
-              DeleteCarsServices(deletingCar).then(() => {showDeleteMessage(); getCars(); setDeletingCar(null);})
+              deleteCarsServices(deletingCar).then(() => {showToastDelete(); cars(); setDeletingCar(null);})
             }}
           >
             Excluir

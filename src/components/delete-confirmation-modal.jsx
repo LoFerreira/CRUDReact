@@ -1,7 +1,7 @@
 import React from "react";
 import Separator from "./separator";
 import Button from "./button";
-import DeleteBrandService from "../services/delete-brand-service";
+import deleteBrandService from "../services/delete-brand-service";
 
 function DeleteConfirmationModal({ brand, onCancel, onSuccess }) {
   return (
@@ -21,7 +21,7 @@ function DeleteConfirmationModal({ brand, onCancel, onSuccess }) {
         <Button
           intent="secondary"
           onClick={() => {
-            DeleteBrandService({ id: brand.id }).then(() => {
+            deleteBrandService({ id: brand.id }).then(() => {
               onSuccess()
             })
           }}

@@ -9,8 +9,8 @@ import ReactNotifications from "react-notifications-component";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import { useParams } from "react-router-dom";
-import GetBrandByIdService from "../services/get-brand-by-id-service";
-import SaveBrandService from "../services/save-brand-service";
+import getBrandByIdService from "../services/get-brand-by-id-service";
+import saveBrandService from "../services/save-brand-service";
 
 function NewBrand() {
   const [addBrand, setAddBrand] = React.useState("");
@@ -44,7 +44,7 @@ function NewBrand() {
       id ? successEdit() : successCreate();
     };
 
-    SaveBrandService({ id, name: addBrand }).then(() => {
+    saveBrandService({ id, name: addBrand }).then(() => {
       messageToast();
       setAddBrand("");
       setAddBrandId("");
@@ -53,7 +53,7 @@ function NewBrand() {
 
   React.useEffect(() => {
     if (id) {
-      GetBrandByIdService({ id }).then((data) => {
+      getBrandByIdService({ id }).then((data) => {
         setAddBrandId(data.id);
         setAddBrand(data.name);
       });

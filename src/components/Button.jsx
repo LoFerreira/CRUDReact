@@ -113,5 +113,5 @@ Button.defaultProps = {
   pending: false,
   variant: "solid",
   intent: "primary",
-  fontSize: "md",
+  fontSize: "xs",
 };
