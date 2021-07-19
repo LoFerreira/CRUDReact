@@ -1,30 +1,6 @@
 {
   "cars": [
     {
-      "plate": "abd-5432",
-      "color": "white",
-      "brandId": 24,
-      "id": 3
-    },
-    {
-      "plate": "abc-5432",
-      "color": "white",
-      "brandId": 24,
-      "id": 4
-    },
-    {
-      "plate": "abc-5432",
-      "color": "white",
-      "brandId": 24,
-      "id": 5
-    },
-    {
-      "plate": "abc-5432",
-      "color": "white",
-      "brandId": 24,
-      "id": 6
-    },
-    {
       "plate": "abc-5432",
       "color": "white",
       "brandId": 24,
@@ -33,20 +9,32 @@
     {
       "plate": "abc-5432",
       "color": "white",
-      "brandId": 24,
+      "brandId": 25,
       "id": 8
     },
     {
       "plate": "abc-5432",
       "color": "white",
-      "brandId": 24,
-      "id": 9
+      "brandId": 25,
+      "id": 10
     },
     {
-      "plate": "abc-5432",
-      "color": "white",
-      "brandId": 24,
-      "id": 10
+      "plate": "aaa-2521",
+      "color": "Azul",
+      "brandId": 26,
+      "id": 11
+    },
+    {
+      "plate": "lll-999",
+      "color": "Beje",
+      "brandId": 25,
+      "id": 13
+    },
+    {
+      "plate": "lxl-2693",
+      "color": "Marrom",
+      "brandId": 26,
+      "id": 14
     }
   ],
   "brands": [

@@ -20,14 +20,7 @@ function CarsScreen() {
   const [selectedBrand, setSelectedBrand] = React.useState(null);
   const [deletingCar, setDeletingCar] = React.useState();
   const { cars, loadCars } = useCars();
-
-  const carsData = cars.map((cars) => ({
-    id: cars.id,
-    plate: cars.plate,
-    color: cars.color,
-    label: cars.brand.name,
-  }));
-
+  
   function showToastDelete() {
     store.addNotification({
       message: "carro excluído com sucesso!",
@@ -38,6 +31,13 @@ function CarsScreen() {
       },
     });
   }
+
+  const carsData = cars.map((cars) => ({
+    id: cars.id,
+    plate: cars.plate,
+    color: cars.color,
+    label: cars.brand.name,
+  }));
 
   return (
     <>
@@ -97,7 +97,9 @@ function CarsScreen() {
               render: ({ rowData }) => {
                 return (
                   <div style={{ display: "flex", flexDirection: "row" }}>
+                   <Link to={`/carros/${rowData.id}`}>
                     <Button>Editar</Button>
+                  </Link>
                     <Separator size="md" />
                     <Button
                       intent="secondary"
@@ -114,7 +116,7 @@ function CarsScreen() {
           ]}
         />
       </Container>
-     { <Modal
+     <Modal
         visible={Boolean(deletingCar)}
         onRequestClose={() => setDeletingCar(null)}
       >
@@ -136,7 +138,7 @@ function CarsScreen() {
             Excluir
           </Button>
         </div>
-      </Modal>}
+      </Modal>
     </>
   );
 }

@@ -26,6 +26,9 @@ const Routes = () => {
         <Route exact path="/carros/novo">
           <CarFormScreen />
         </Route>
+        <Route exact path="/carros/:id">
+          <CarFormScreen />
+        </Route>
         <Route exact path="/marcas/nova">
           <BrandFormScreen  />
         </Route>
