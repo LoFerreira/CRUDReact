@@ -22,8 +22,8 @@ function DeleteConfirmationModal({ brand, onCancel, onSuccess }) {
           intent="secondary"
           onClick={() => {
             deleteBrandService({ id: brand.id }).then(() => {
-              onSuccess()
-            })
+              onSuccess();
+            });
           }}
         >
           Excluir

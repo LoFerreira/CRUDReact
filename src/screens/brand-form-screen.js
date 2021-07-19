@@ -11,11 +11,15 @@ import "react-notifications-component/dist/theme.css";
 import { useParams } from "react-router-dom";
 import getBrandByIdService from "../services/get-brand-by-id-service";
 import saveBrandService from "../services/save-brand-service";
+import Modal from "../components/modal";
+import { useHistory } from "react-router-dom";
 
-function BrandFormScreen () {
+function BrandFormScreen() {
   const [brandName, setBrandName] = React.useState("");
   const [brandId, setBrandId] = React.useState("");
   const { id: idFromRoute } = useParams();
+  const [showModal, setShowModal] = React.useState(false);
+  const { goBack } = useHistory();
 
   function showToast({ message }) {
     store.addNotification({
@@ -53,7 +57,7 @@ function BrandFormScreen () {
       <Menu />
       <Separator />
       <div style={{ padding: "50px" }}>
-      <h1>{brandId ? "Editar Marca" : "Nova Marca"}</h1>
+        <h1>{brandId ? "Editar Marca" : "Nova Marca"}</h1>
         <Separator size="xl" />
         <form
           onSubmit={(e) => {
@@ -76,7 +80,7 @@ function BrandFormScreen () {
           />
           <Separator size="lg" />
           <div style={{ display: "flex" }}>
-            <Button>Salvar</Button>
+            <Button onClick={() => brandName == "" ? null : setShowModal(true) }>Salvar</Button>
             <Separator />
             <Link to="/marcas">
               <Button>Voltar</Button>
@@ -84,8 +88,22 @@ function BrandFormScreen () {
           </div>
         </form>
       </div>
+      <Modal
+        visible={(showModal)==true}
+        onRequestClose={() => {
+          setShowModal(false);
+        }}
+      >
+        <Label children="Deseja voltar para a tabela de marcas ou adicionar uma nova marca?"></Label>
+        <Separator />
+        <div style={{display: "flex"}}>
+        <Button onClick={() => {goBack();}}>Voltar</Button>
+        <Separator />
+        <Button onClick={() => {setShowModal(false)}}>Adicionar nova marca</Button>
+        </div>
+      </Modal>
     </>
   );
 }
 
-export default BrandFormScreen ;
+export default BrandFormScreen;

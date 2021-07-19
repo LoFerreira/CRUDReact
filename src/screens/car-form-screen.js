@@ -10,7 +10,7 @@ import ReactNotifications from "react-notifications-component";
  */ import "react-notifications-component/dist/theme.css";
 import SelectBrand from "../components/select-brand";
 
-function NewCar() {
+function CarFormScreen() {
   const [addPlate, setAddPlate] = React.useState("");
   const [addColor, setAddColor] = React.useState("");
   const [selectedBrand, setSelectedBrand] = React.useState("");
@@ -85,4 +85,4 @@ function NewCar() {
   );
 }
 
-export default NewCar;
+export default CarFormScreen;

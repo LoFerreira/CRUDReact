@@ -19,7 +19,7 @@ function CarsScreen() {
   const [plate, setPlate] = React.useState("");
   const [selectedBrand, setSelectedBrand] = React.useState(null);
   const [deletingCar, setDeletingCar] = React.useState();
-  const { cars } = useCars();
+  const { cars, loadCars } = useCars();
 
   const carsData = cars.map((cars) => ({
     id: cars.id,
@@ -77,7 +77,7 @@ function CarsScreen() {
         <div style={{ border: "1px solid black", padding: 10 }}>
           <Label htmlFor="brand" children="Filtrar por marca:" />
           <Separator size="xs" />
-          <SelectBrand 
+          <SelectBrand
             value={selectedBrand?.id}
             onChange={(marca) => setSelectedBrand(marca)}
           />
@@ -86,7 +86,7 @@ function CarsScreen() {
 
       <Container>
         <Table
-          data={ carsData }
+          data={carsData}
           columns={[
             { path: "plate", label: "Placa", width: "30%" },
             { path: "color", label: "Cor", width: "30%" },
@@ -101,7 +101,9 @@ function CarsScreen() {
                     <Separator size="md" />
                     <Button
                       intent="secondary"
-                      onClick={() => {setDeletingCar(rowData)}}
+                      onClick={() => {
+                        setDeletingCar(rowData);
+                      }}
                     >
                       Excluir
                     </Button>
@@ -112,22 +114,29 @@ function CarsScreen() {
           ]}
         />
       </Container>
-      <Modal
+     { <Modal
         visible={Boolean(deletingCar)}
         onRequestClose={() => setDeletingCar(null)}
       >
-        Tem certeza que deseja excluir o carro de placa: {deletingCar?.plate}??
-        <div>
+        Tem certeza que deseja excluir o carro de placa:<Separator size="xs"/> {deletingCar?.plate}??
+        <Separator size="lg"/>
+        <div style={{display: "flex"}}>
+          <Button onClick={() => setDeletingCar(null)}>Cancelar</Button>
+          <Separator />
           <Button
+            intent="secondary"
             onClick={() => {
-              deleteCarsServices(deletingCar).then(() => {showToastDelete(); cars(); setDeletingCar(null);})
+              deleteCarsServices(deletingCar).then(() => {
+                showToastDelete();
+                loadCars();
+                setDeletingCar(null);
+              });
             }}
           >
             Excluir
           </Button>
-          <Button onClick={() => setDeletingCar(null)}>Cancelar</Button>
         </div>
-      </Modal>
+      </Modal>}
     </>
   );
 }

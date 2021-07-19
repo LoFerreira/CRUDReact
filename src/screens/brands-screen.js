@@ -13,7 +13,7 @@ import "react-notifications-component/dist/theme.css";
 import useBrands from "../hooks/use-brands";
 
 function BrandsScreen() {
-  const { brands } = useBrands();
+  const { brands, loadBrands } = useBrands();
   const [deletingBrand, setDeletingBrand] = React.useState();
 
   function successDelete() {
@@ -92,7 +92,7 @@ function BrandsScreen() {
             brand={deletingBrand}
             onCancel={() => onRequestClose()}
             onSuccess={() => {
-              brands();
+              loadBrands();
               onRequestClose();
               successDelete();
             }}

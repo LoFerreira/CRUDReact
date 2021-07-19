@@ -1,57 +1,55 @@
 {
   "cars": [
     {
-      "plate": "abc-1234",
+      "plate": "abd-5432",
       "color": "white",
-      "brandId": 21,
-      "id": 4
+      "brandId": 24,
+      "id": 3
     },
     {
-      "plate": "abc-1234",
+      "plate": "abc-5432",
       "color": "white",
-      "brandId": 21,
+      "brandId": 24,
       "id": 4
     },
     {
       "plate": "abc-5432",
       "color": "white",
-      "brandId": 16,
+      "brandId": 24,
       "id": 5
+    },
+    {
+      "plate": "abc-5432",
+      "color": "white",
+      "brandId": 24,
+      "id": 6
+    },
+    {
+      "plate": "abc-5432",
+      "color": "white",
+      "brandId": 24,
+      "id": 7
+    },
+    {
+      "plate": "abc-5432",
+      "color": "white",
+      "brandId": 24,
+      "id": 8
+    },
+    {
+      "plate": "abc-5432",
+      "color": "white",
+      "brandId": 24,
+      "id": 9
+    },
+    {
+      "plate": "abc-5432",
+      "color": "white",
+      "brandId": 24,
+      "id": 10
     }
   ],
   "brands": [
-    {
-      "name": "Volkswagen",
-      "id": 15
-    },
-    {
-      "name": "BMW",
-      "id": 16
-    },
-    {
-      "name": "Toyota",
-      "id": 17
-    },
-    {
-      "name": "Porsche",
-      "id": 18
-    },
-    {
-      "name": "Hyundai",
-      "id": 19
-    },
-    {
-      "name": "Toyota",
-      "id": 20
-    },
-    {
-      "name": "Nissan",
-      "id": 21
-    },
-    {
-      "name": "Toyota",
-      "id": 22
-    },
     {
       "name": "Toyota",
       "id": 23
@@ -59,6 +57,22 @@
     {
       "name": "Peugeot",
       "id": 24
+    },
+    {
+      "name": "Leleo",
+      "id": 25
+    },
+    {
+      "name": "das",
+      "id": 26
+    },
+    {
+      "name": "Kia",
+      "id": 27
+    },
+    {
+      "name": "Toyotaaaa",
+      "id": 28
     }
   ]
 }

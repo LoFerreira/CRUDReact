@@ -4,13 +4,17 @@ import getCarsServices from "../services/get-cars-service";
 function useCars() {
   const [cars, setCars] = React.useState([]);
 
-  React.useEffect(() => {
+  function loadCars() {
     getCarsServices().then((data) => {
       setCars(data);
     });
+  }
+
+  React.useEffect(() => {
+    loadCars()
   },[]);
 
-  return { cars };
+  return { cars, loadCars};
 }
 
 export default useCars;

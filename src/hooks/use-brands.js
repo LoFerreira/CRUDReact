@@ -4,13 +4,17 @@ import getBrandsService from "../services/get-brands-service";
 function useBrands() {
   const [brands, setBrands] = React.useState([]);
 
-  React.useEffect(() => {
+  function loadBrands() {
     getBrandsService().then((data) => {
       setBrands(data);
     });
-  },[]);
+  }
 
-  return { brands };
+  React.useEffect(() => {
+    loadBrands();
+  }, []);
+
+  return { brands, loadBrands };
 }
 
 export default useBrands;
