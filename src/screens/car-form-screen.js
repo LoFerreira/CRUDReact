@@ -17,7 +17,7 @@ import Modal from "../components/modal";
 function CarFormScreen() {
   const [plate, setPlate] = React.useState("");
   const [color, setColor] = React.useState("");
-  const [selectedBrand, setSelectedBrand] = React.useState("");
+  const [selectedBrand, setSelectedBrand] = React.useState("1");
   const [showModal, setShowModal] = React.useState(false);
   const { goBack } = useHistory();
   const { id: idFromRoute } = useParams();
@@ -52,14 +52,15 @@ function CarFormScreen() {
   React.useEffect(() => {
     if (idFromRoute) {
       getCarByIdService({ id: idFromRoute }).then((data) => {
-        console.log(data)
+        console.log(data);
         setPlate(data.plate);
         setColor(data.color);
         setSelectedBrand(data.brandId);
-      })
+      });
     }
   }, [idFromRoute]);
 
+  console.log(selectedBrand);
 
   return (
     <>
@@ -75,7 +76,7 @@ function CarFormScreen() {
             saveCar();
           }}
         >
-          <Label htmlFor="plate" children="Placa:" />
+          <Label htmlFor="plate">Placa:</Label>
           <Separator size="xs" />
           <Input
             id="plate"
@@ -86,14 +87,16 @@ function CarFormScreen() {
             required
           />
           <Separator size="lg" />
-          <Label htmlFor="brand" children="Marca:" />
+          <Label htmlFor="brand">Marca:</Label>
           <Separator size="xs" />
           <SelectBrand
-            value={selectedBrand?.brandId}
-            onChange={(brandId) => {setSelectedBrand(brandId);}}
+            value={selectedBrand}
+            onChange={(brandId) => {
+              setSelectedBrand(brandId);
+            }}
           />
           <Separator size="lg" />
-          <Label htmlFor="color" children="Cor:" />
+          <Label htmlFor="color">Cor:</Label>
           <Separator size="xs" />
           <Input
             id="color"
@@ -114,23 +117,17 @@ function CarFormScreen() {
               Salvar
             </Button>
             <Separator />
-            <Button
-              onClick={() => {
-                
-              }}
-            >
-              Voltar
-            </Button>
+            <Button onClick={() => {}}>Voltar</Button>
           </div>
         </form>
       </div>
       <Modal
-        visible={showModal == true}
+        visible={showModal}
         onRequestClose={() => {
           setShowModal(false);
         }}
       >
-        <Label children="Deseja voltar para a tabela de marcas ou adicionar uma nova marca?"></Label>
+        <Label>Deseja voltar para a tabela de marcas ou adicionar uma nova marca?</Label>
         <Separator />
         <div style={{ display: "flex" }}>
           <Button

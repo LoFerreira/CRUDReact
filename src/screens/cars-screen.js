@@ -16,11 +16,11 @@ import useCars from "../hooks/use-cars";
 import SelectBrand from "../components/select-brand";
 
 function CarsScreen() {
-  const [plate, setPlate] = React.useState("");
-  const [selectedBrand, setSelectedBrand] = React.useState(null);
+  const [filterPlate, setFilterPlate] = React.useState("");
+  const [selectedBrand, setSelectedBrand] = React.useState(false);
   const [deletingCar, setDeletingCar] = React.useState();
   const { cars, loadCars } = useCars();
-  
+
   function showToastDelete() {
     store.addNotification({
       message: "carro excluído com sucesso!",
@@ -37,8 +37,15 @@ function CarsScreen() {
     plate: cars.plate,
     color: cars.color,
     label: cars.brand.name,
+    brandId: cars.brand.id,
   }));
 
+  console.log(selectedBrand.id);
+  console.log(carsData);
+
+  const filteredCars = carsData.filter(carsData =>
+    carsData.plate.toLowerCase().startsWith(filterPlate) /* && selectedBrand? carsData.brandId === selectedBrand.id : carsData */
+  );
   return (
     <>
       <ReactNotifications />
@@ -66,9 +73,9 @@ function CarsScreen() {
           <Label htmlFor="plate" children="Filtrar por placa:" />
           <Separator size="xs" />
           <Input
-            id="plate"
-            value={plate}
-            onChange={(value) => setPlate(value)}
+            id="plateCar"
+            value={filterPlate}
+            onChange={(value) => setFilterPlate(value)}
             placeholder="XXX-0000"
             type="text"
           />
@@ -78,7 +85,7 @@ function CarsScreen() {
           <Label htmlFor="brand" children="Filtrar por marca:" />
           <Separator size="xs" />
           <SelectBrand
-            value={selectedBrand?.id}
+            value={selectedBrand}
             onChange={(marca) => setSelectedBrand(marca)}
           />
         </div>
@@ -86,7 +93,7 @@ function CarsScreen() {
 
       <Container>
         <Table
-          data={carsData}
+          data={filteredCars}
           columns={[
             { path: "plate", label: "Placa", width: "30%" },
             { path: "color", label: "Cor", width: "30%" },
@@ -97,9 +104,9 @@ function CarsScreen() {
               render: ({ rowData }) => {
                 return (
                   <div style={{ display: "flex", flexDirection: "row" }}>
-                   <Link to={`/carros/${rowData.id}`}>
-                    <Button>Editar</Button>
-                  </Link>
+                    <Link to={`/carros/${rowData.id}`}>
+                      <Button>Editar</Button>
+                    </Link>
                     <Separator size="md" />
                     <Button
                       intent="secondary"
@@ -116,13 +123,14 @@ function CarsScreen() {
           ]}
         />
       </Container>
-     <Modal
+      <Modal
         visible={Boolean(deletingCar)}
         onRequestClose={() => setDeletingCar(null)}
       >
-        Tem certeza que deseja excluir o carro de placa:<Separator size="xs"/> {deletingCar?.plate}??
-        <Separator size="lg"/>
-        <div style={{display: "flex"}}>
+        Tem certeza que deseja excluir o carro de placa:
+        <Separator size="xs" /> {deletingCar?.plate}??
+        <Separator size="lg" />
+        <div style={{ display: "flex" }}>
           <Button onClick={() => setDeletingCar(null)}>Cancelar</Button>
           <Separator />
           <Button

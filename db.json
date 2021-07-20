@@ -1,66 +1,170 @@
 {
   "cars": [
     {
-      "plate": "abc-5432",
-      "color": "white",
-      "brandId": 24,
-      "id": 7
+      "plate": "aaa-000",
+      "color": "Branco",
+      "id": 1,
+      "brandId": 1
     },
     {
-      "plate": "abc-5432",
-      "color": "white",
-      "brandId": 25,
-      "id": 8
+      "plate": "bbb-1111",
+      "color": "Beje",
+      "brandId": 2,
+      "id": 2
     },
     {
-      "plate": "abc-5432",
-      "color": "white",
-      "brandId": 25,
-      "id": 10
+      "plate": "ccc-2222",
+      "color": "Beje",
+      "brandId": 3,
+      "id": 3
     },
     {
-      "plate": "aaa-2521",
+      "plate": "ccc-4444",
       "color": "Azul",
-      "brandId": 26,
-      "id": 11
+      "brandId": 4,
+      "id": 4
     },
     {
       "plate": "lll-999",
-      "color": "Beje",
-      "brandId": 25,
-      "id": 13
+      "color": "Branco",
+      "brandId": 8,
+      "id": 5
     },
     {
-      "plate": "lxl-2693",
+      "plate": "abd-5432",
+      "color": "Preto",
+      "brandId": 14,
+      "id": 6
+    },
+    {
+      "plate": "aaa-2521",
       "color": "Marrom",
+      "brandId": 19,
+      "id": 7
+    },
+    {
+      "plate": "abd-5432",
+      "color": "white",
       "brandId": 26,
-      "id": 14
+      "id": 8
+    },
+    {
+      "plate": "aaa-2521",
+      "color": "white",
+      "brandId": 6,
+      "id": 9
+    },
+    {
+      "plate": "AAA-4561",
+      "color": "Vermelho",
+      "brandId": 12,
+      "id": 10
     }
   ],
   "brands": [
     {
-      "name": "Toyota",
-      "id": 23
+      "name": "Alfa Romeo",
+      "id": 1
     },
     {
-      "name": "Peugeot",
-      "id": 24
+      "name": "Aston Martin",
+      "id": 2
     },
     {
-      "name": "Leleo",
-      "id": 25
+      "name": "Audi",
+      "id": 3
     },
     {
-      "name": "das",
-      "id": 26
+      "name": "Bentley",
+      "id": 4
+    },
+    {
+      "name": "Bmw",
+      "id": 5
+    },
+    {
+      "name": "Citroen",
+      "id": 6
+    },
+    {
+      "name": "Ferrari",
+      "id": 7
+    },
+    {
+      "name": "Fiat",
+      "id": 8
+    },
+    {
+      "name": "Ford",
+      "id": 9
+    },
+    {
+      "name": "Honda",
+      "id": 10
+    },
+    {
+      "name": "Hyundai",
+      "id": 11
+    },
+    {
+      "name": "Jaguar",
+      "id": 12
+    },
+    {
+      "name": "Jeep",
+      "id": 13
     },
     {
       "name": "Kia",
-      "id": 27
+      "id": 14
     },
     {
-      "name": "Toyotaaaa",
-      "id": 28
+      "name": "Lamborghini",
+      "id": 15
+    },
+    {
+      "name": "Land Rover",
+      "id": 16
+    },
+    {
+      "name": "Mercedes-Benz",
+      "id": 17
+    },
+    {
+      "name": "Mitsubishi",
+      "id": 18
+    },
+    {
+      "name": "Nissan",
+      "id": 19
+    },
+    {
+      "name": "Peugeot",
+      "id": 20
+    },
+    {
+      "name": "Porsche",
+      "id": 21
+    },
+    {
+      "name": "Renault",
+      "id": 22
+    },
+    {
+      "name": "Volkswagen",
+      "id": 23
+    },
+    {
+      "name": "Toyota",
+      "id": 24
+    },
+    {
+      "name": "Tesla",
+      "id": 25
+    },
+    {
+      "name": "Suzuki",
+      "id": 26
     }
   ]
 }
