@@ -42,6 +42,7 @@ function BrandFormScreen() {
 
       saveBrandService({ id, name }).then(() => {
         showToast(message);
+        setValue("brand", "")
       });
     },
   });

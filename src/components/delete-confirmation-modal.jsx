@@ -6,8 +6,7 @@ import deleteBrandService from "../services/delete-brand-service";
 function DeleteConfirmationModal({ brand, onCancel, onSuccess }) {
   return (
     <>
-      <h3>{brand.name}</h3>
-      <p>Tem certeza que deseja excluir {brand.name}?</p>
+      <h5>Tem certeza que deseja excluir a marca: {brand.name}?</h5>
       <Separator />
       <div style={{ display: "flex" }}>
         <Button

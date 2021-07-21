@@ -11,10 +11,15 @@ import ReactNotifications from "react-notifications-component";
 import { store } from "react-notifications-component";
 import "react-notifications-component/dist/theme.css";
 import useBrands from "../hooks/use-brands";
+import useForm from "../hooks/use-form";
 
 function BrandsScreen() {
   const { brands, loadBrands } = useBrands();
-  const [deletingBrand, setDeletingBrand] = React.useState();
+  const { getValue, setValue } = useForm({
+    initialValues: {
+      deletingBrand: undefined,
+    },
+  });
 
   function successDelete() {
     store.addNotification({
@@ -28,7 +33,7 @@ function BrandsScreen() {
   }
 
   function onRequestClose() {
-    setDeletingBrand(undefined);
+    setValue("deletingBrand", false);
   }
 
   return (
@@ -70,7 +75,7 @@ function BrandsScreen() {
                   <Button
                     intent="secondary"
                     onClick={() => {
-                      setDeletingBrand(rowData);
+                      setValue("deletingBrand", rowData);
                     }}
                   >
                     Excluir
@@ -82,14 +87,14 @@ function BrandsScreen() {
         />
       </Container>
       <Modal
-        visible={!!deletingBrand}
+        visible={getValue("deletingBrand")}
         onRequestClose={() => {
-          onRequestClose();
+          setValue("deletingBrand", false);
         }}
       >
-        {deletingBrand ? (
+        {getValue("deletingBrand") ? (
           <DeleteConfirmationModal
-            brand={deletingBrand}
+            brand={getValue("deletingBrand")}
             onCancel={() => onRequestClose()}
             onSuccess={() => {
               loadBrands();
