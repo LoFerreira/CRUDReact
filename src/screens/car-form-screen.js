@@ -13,6 +13,7 @@ import { useParams } from "react-router-dom";
 import saveCarService from "../services/save-car-service";
 import getCarByIdService from "../services/get-car-by-id";
 import Modal from "../components/modal";
+import { Link } from "react-router-dom";
 
 function CarFormScreen() {
   const [plate, setPlate] = React.useState("");
@@ -68,7 +69,7 @@ function CarFormScreen() {
       <Menu />
       <Separator />
       <div style={{ padding: "50px" }}>
-        <h1>{idFromRoute ? "Editar Marca" : "Nova Marca"}</h1>
+        <h1>{idFromRoute ? "Editar Carro" : "Novo Carro"}</h1>
         <Separator />
         <form
           onSubmit={(e) => {
@@ -117,7 +118,11 @@ function CarFormScreen() {
               Salvar
             </Button>
             <Separator />
-            <Button onClick={() => {}}>Voltar</Button>
+            <Link to="/carros">
+            <Button>
+              Voltar
+            </Button>
+            </Link>
           </div>
         </form>
       </div>
@@ -127,7 +132,9 @@ function CarFormScreen() {
           setShowModal(false);
         }}
       >
-        <Label>Deseja voltar para a tabela de marcas ou adicionar uma nova marca?</Label>
+        <Label>
+          Deseja voltar para a tabela de marcas ou adicionar uma nova marca?
+        </Label>
         <Separator />
         <div style={{ display: "flex" }}>
           <Button
@@ -138,13 +145,10 @@ function CarFormScreen() {
             Voltar
           </Button>
           <Separator />
-          <Button
-            onClick={() => {
-              setShowModal(false);
-            }}
-          >
-            Adicionar nova marca
-          </Button>
+          {idFromRoute? <Link to="/carros/novo">
+            <Button onClick={() => {setShowModal(false)}}>Adicionar nova marca</Button>
+          </Link> : <Button onClick={() => {setShowModal(false)}}>Adicionar nova marca</Button>}
+         
         </div>
       </Modal>
     </>

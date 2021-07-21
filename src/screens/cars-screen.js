@@ -37,14 +37,11 @@ function CarsScreen() {
     plate: cars.plate,
     color: cars.color,
     label: cars.brand.name,
-    brandId: cars.brand.id,
+    brandId: cars.brand?.id,
   }));
 
-  console.log(selectedBrand.id);
-  console.log(carsData);
-
   const filteredCars = carsData.filter(carsData =>
-    carsData.plate.toLowerCase().startsWith(filterPlate) /* && selectedBrand? carsData.brandId === selectedBrand.id : carsData */
+    carsData.plate.toLowerCase().startsWith(filterPlate) && (!selectedBrand || carsData.brandId === selectedBrand?.id)
   );
   return (
     <>
