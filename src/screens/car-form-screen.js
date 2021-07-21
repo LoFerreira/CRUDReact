@@ -14,14 +14,16 @@ import saveCarService from "../services/save-car-service";
 import getCarByIdService from "../services/get-car-by-id";
 import Modal from "../components/modal";
 import { Link } from "react-router-dom";
+import useForm from "../hooks/use-form";
 
 function CarFormScreen() {
-  const [plate, setPlate] = React.useState("");
-  const [color, setColor] = React.useState("");
-  const [selectedBrand, setSelectedBrand] = React.useState("1");
-  const [showModal, setShowModal] = React.useState(false);
   const { goBack } = useHistory();
   const { id: idFromRoute } = useParams();
+  const { getValue, setValue } = useForm({
+    initialValues: {
+      showModal: false,
+    },
+  });
 
   function showToast({ message }) {
     store.addNotification({
@@ -37,31 +39,29 @@ function CarFormScreen() {
   function saveCar() {
     saveCarService({
       id: idFromRoute,
-      plate,
-      color,
-      brandId: selectedBrand.id,
+      plate: getValue("plate"),
+      color: getValue("color"),
+      brandId: getValue("selectedBrand.id"),
     }).then(() => {
       showToast({
         message: `Carro ${idFromRoute ? "editado" : "adicionado"} com sucesso`,
       });
     });
-    setPlate("");
-    setColor("");
-    setSelectedBrand("");
+    setValue("Plate", "");
+    setValue("Color", "");
+    setValue("SelectedBrand", "");
   }
 
   React.useEffect(() => {
     if (idFromRoute) {
       getCarByIdService({ id: idFromRoute }).then((data) => {
-        console.log(data);
-        setPlate(data.plate);
-        setColor(data.color);
-        setSelectedBrand(data.brandId);
+        setValue("plate", data.plate);
+        setValue("selectedBrand", data.brandId);
+        setValue("color", data.color);
+        console.log(data)
       });
     }
   }, [idFromRoute]);
-
-  console.log(selectedBrand);
 
   return (
     <>
@@ -79,21 +79,21 @@ function CarFormScreen() {
         >
           <Label htmlFor="plate">Placa:</Label>
           <Separator size="xs" />
-          <Input
+          {<Input
             id="plate"
-            value={plate}
-            onChange={(value) => setPlate(value)}
+            value={getValue("plate")}
+            onChange={(value) => setValue("plate", value)}
             type="text"
             placeholder="xxx-0000"
             required
-          />
+          />}
           <Separator size="lg" />
           <Label htmlFor="brand">Marca:</Label>
           <Separator size="xs" />
           <SelectBrand
-            value={selectedBrand}
+            value={getValue("selectedBrand?.id")}
             onChange={(brandId) => {
-              setSelectedBrand(brandId);
+              setValue("selectedBrand", brandId);
             }}
           />
           <Separator size="lg" />
@@ -101,8 +101,8 @@ function CarFormScreen() {
           <Separator size="xs" />
           <Input
             id="color"
-            value={color}
-            onChange={(value) => setColor(value)}
+            value={getValue("color")}
+            onChange={(value) => setValue("color", value)}
             type="text"
             required
           />
@@ -110,8 +110,12 @@ function CarFormScreen() {
           <div style={{ display: "flex" }}>
             <Button
               onClick={() => {
-                if (plate && color !== "") {
-                  setShowModal(true);
+                if (
+                  getValue("plate") &&
+                  getValue("color") &&
+                  getValue("selectedBrand") !== ""
+                ) {
+                  setValue("showModal", true);
                 }
               }}
             >
@@ -119,17 +123,15 @@ function CarFormScreen() {
             </Button>
             <Separator />
             <Link to="/carros">
-            <Button>
-              Voltar
-            </Button>
+              <Button>Voltar</Button>
             </Link>
           </div>
         </form>
       </div>
       <Modal
-        visible={showModal}
+        visible={getValue("showModal")}
         onRequestClose={() => {
-          setShowModal(false);
+          setValue("showModal", false);
         }}
       >
         <Label>
@@ -145,10 +147,25 @@ function CarFormScreen() {
             Voltar
           </Button>
           <Separator />
-          {idFromRoute? <Link to="/carros/novo">
-            <Button onClick={() => {setShowModal(false)}}>Adicionar nova marca</Button>
-          </Link> : <Button onClick={() => {setShowModal(false)}}>Adicionar nova marca</Button>}
-         
+          {idFromRoute ? (
+            <Link to="/carros/novo">
+              <Button
+                onClick={() => {
+                  setValue("showModal", false);
+                }}
+              >
+                Adicionar nova marca
+              </Button>
+            </Link>
+          ) : (
+            <Button
+              onClick={() => {
+                setValue("showModal", false);
+              }}
+            >
+              Adicionar nova marca
+            </Button>
+          )}
         </div>
       </Modal>
     </>

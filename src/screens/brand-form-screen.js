@@ -17,7 +17,6 @@ import useForm from "../hooks/use-form";
 
 function BrandFormScreen() {
   const { id: idFromRoute } = useParams();
-  const [showModal, setShowModal] = React.useState(false);
   const { goBack } = useHistory();
 
   function showToast( message ) {
@@ -36,7 +35,9 @@ function BrandFormScreen() {
     : `Marca adicionada com sucesso!`;
 
   const { getValue, setValue, submit } = useForm({
-    initialValues: {},
+    initialValues: {
+      "showModal": false,
+    },
     onSubmit: ({ brand }) => {
       const { id, name } = brand;
 
@@ -91,7 +92,7 @@ function BrandFormScreen() {
           <div style={{ display: "flex" }}>
             <Button
               onClick={() =>
-                getValue("brand.name") == "" ? null : setShowModal(true)
+                getValue("brand.name") == "" ? null : setValue("showModal", true)
               }
             >
               Salvar
@@ -104,9 +105,9 @@ function BrandFormScreen() {
         </form>
       </div>
       <Modal
-        visible={showModal == true}
+        visible={getValue("showModal")}
         onRequestClose={() => {
-          setShowModal(false);
+          setValue("showModal", false)
         }}
       >
         <Label children="Deseja voltar para a tabela de marcas ou adicionar uma nova marca?"></Label>
@@ -122,7 +123,7 @@ function BrandFormScreen() {
           <Separator />
           <Button
             onClick={() => {
-              setShowModal(false);
+              setValue("showModal", false)
             }}
           >
             Adicionar nova marca

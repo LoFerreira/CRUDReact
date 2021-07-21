@@ -43,6 +43,9 @@ function CarsScreen() {
   const filteredCars = carsData.filter(carsData =>
     carsData.plate.toLowerCase().startsWith(filterPlate) && (!selectedBrand || carsData.brandId === selectedBrand?.id)
   );
+
+  console.log(selectedBrand)
+
   return (
     <>
       <ReactNotifications />
