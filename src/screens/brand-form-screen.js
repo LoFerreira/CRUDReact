@@ -13,15 +13,14 @@ import getBrandByIdService from "../services/get-brand-by-id-service";
 import saveBrandService from "../services/save-brand-service";
 import Modal from "../components/modal";
 import { useHistory } from "react-router-dom";
+import useForm from "../hooks/use-form";
 
 function BrandFormScreen() {
-  const [brandName, setBrandName] = React.useState("");
-  const [brandId, setBrandId] = React.useState("");
   const { id: idFromRoute } = useParams();
   const [showModal, setShowModal] = React.useState(false);
   const { goBack } = useHistory();
 
-  function showToast({ message }) {
+  function showToast( message ) {
     store.addNotification({
       message,
       type: "success",
@@ -32,21 +31,25 @@ function BrandFormScreen() {
     });
   }
 
-  function saveBrand() {
-    saveBrandService({ id: idFromRoute, name: brandName }).then(() => {
-      showToast({
-        message: `Marca ${idFromRoute ? "editada" : "adicionada"} com sucesso!`,
+  const message = idFromRoute
+    ? `Marca editada com sucesso!`
+    : `Marca adicionada com sucesso!`;
+
+  const { getValue, setValue, submit } = useForm({
+    initialValues: {},
+    onSubmit: ({ brand }) => {
+      const { id, name } = brand;
+
+      saveBrandService({ id, name }).then(() => {
+        showToast(message);
       });
-      setBrandName("");
-      setBrandId("");
-    });
-  }
+    },
+  });
 
   React.useEffect(() => {
     if (idFromRoute) {
       getBrandByIdService({ id: idFromRoute }).then((data) => {
-        setBrandId(data.id);
-        setBrandName(data.name);
+        setValue("brand", data);
       });
     }
   }, [idFromRoute]);
@@ -57,30 +60,41 @@ function BrandFormScreen() {
       <Menu />
       <Separator />
       <div style={{ padding: "50px" }}>
-        <h1>{brandId ? "Editar Marca" : "Nova Marca"}</h1>
+        <h1>{idFromRoute ? "Editar Marca" : "Nova Marca"}</h1>
         <Separator size="xl" />
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            saveBrand();
+            submit();
           }}
         >
           <Label htmlFor="id" children="Id:"></Label>
           <Separator size="xs" />
-          <Input id="id" value={brandId} type="text" disabled="disabled" />
+          <Input
+            id="id"
+            value={getValue("brand.id")}
+            type="text"
+            disabled="disabled"
+          />
           <Separator size="lg" />
           <Label htmlFor="newBrand" children="Marca:"></Label>
           <Separator size="xs" />
           <Input
             id="newBrand"
-            value={brandName}
-            onChange={(value) => setBrandName(value)}
+            value={getValue("brand.name")}
+            onChange={(value) => setValue("brand.name", value)}
             type="text"
             required
           />
           <Separator size="lg" />
           <div style={{ display: "flex" }}>
-            <Button onClick={() => brandName == "" ? null : setShowModal(true) }>Salvar</Button>
+            <Button
+              onClick={() =>
+                getValue("brand.name") == "" ? null : setShowModal(true)
+              }
+            >
+              Salvar
+            </Button>
             <Separator />
             <Link to="/marcas">
               <Button>Voltar</Button>
@@ -89,17 +103,29 @@ function BrandFormScreen() {
         </form>
       </div>
       <Modal
-        visible={(showModal)==true}
+        visible={showModal == true}
         onRequestClose={() => {
           setShowModal(false);
         }}
       >
         <Label children="Deseja voltar para a tabela de marcas ou adicionar uma nova marca?"></Label>
         <Separator />
-        <div style={{display: "flex"}}>
-        <Button onClick={() => {goBack();}}>Voltar</Button>
-        <Separator />
-        <Button onClick={() => {setShowModal(false)}}>Adicionar nova marca</Button>
+        <div style={{ display: "flex" }}>
+          <Button
+            onClick={() => {
+              goBack();
+            }}
+          >
+            Voltar
+          </Button>
+          <Separator />
+          <Button
+            onClick={() => {
+              setShowModal(false);
+            }}
+          >
+            Adicionar nova marca
+          </Button>
         </div>
       </Modal>
     </>
