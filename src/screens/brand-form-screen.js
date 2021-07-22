@@ -18,8 +18,9 @@ import useForm from "../hooks/use-form";
 function BrandFormScreen() {
   const { id: idFromRoute } = useParams();
   const { goBack } = useHistory();
+  const { nameError, setNameError } = React.useState("");
 
-  function showToast( message ) {
+  function showToast(message) {
     store.addNotification({
       message,
       type: "success",
@@ -30,20 +31,26 @@ function BrandFormScreen() {
     });
   }
 
-  const message = idFromRoute
-    ? `Marca editada com sucesso!`
-    : `Marca adicionada com sucesso!`;
-
+  
   const { getValue, setValue, submit } = useForm({
     initialValues: {
-      "showModal": false,
+      showModal: false,
     },
     onSubmit: ({ brand }) => {
       const { id, name } = brand;
+      
+      if (!name) {
+        setNameError("Campo nome é obrigatório");
+        return;
+      }
+
+      const message = idFromRoute
+        ? `Marca ${name} editada com sucesso!`
+        : `Marca ${name} adicionada com sucesso!`;
 
       saveBrandService({ id, name }).then(() => {
         showToast(message);
-        setValue("brand", "")
+        setValue("brand", "");
       });
     },
   });
@@ -55,6 +62,8 @@ function BrandFormScreen() {
       });
     }
   }, [idFromRoute]);
+
+  console.log(getValue("brand.name"));
 
   return (
     <>
@@ -86,17 +95,13 @@ function BrandFormScreen() {
             value={getValue("brand.name")}
             onChange={(value) => setValue("brand.name", value)}
             type="text"
-            required
           />
+          <Label style={{ color: "red" }} htmlFor="newBrand">
+            {nameError}
+          </Label>
           <Separator size="lg" />
           <div style={{ display: "flex" }}>
-            <Button
-              onClick={() =>
-                getValue("brand.name") == "" ? null : setValue("showModal", true)
-              }
-            >
-              Salvar
-            </Button>
+            <Button onClick={() => setValue("showModal", true)}>Salvar</Button>
             <Separator />
             <Link to="/marcas">
               <Button>Voltar</Button>
@@ -107,7 +112,7 @@ function BrandFormScreen() {
       <Modal
         visible={getValue("showModal")}
         onRequestClose={() => {
-          setValue("showModal", false)
+          setValue("showModal", false);
         }}
       >
         <Label children="Deseja voltar para a tabela de marcas ou adicionar uma nova marca?"></Label>
@@ -123,7 +128,7 @@ function BrandFormScreen() {
           <Separator />
           <Button
             onClick={() => {
-              setValue("showModal", false)
+              setValue("showModal", false);
             }}
           >
             Adicionar nova marca
