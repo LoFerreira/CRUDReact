@@ -18,7 +18,7 @@ import useForm from "../hooks/use-form";
 function BrandFormScreen() {
   const { id: idFromRoute } = useParams();
   const { goBack } = useHistory();
-  const { nameError, setNameError } = React.useState("");
+  const [nameError, setNameError] = React.useState("");
 
   function showToast(message) {
     store.addNotification({
@@ -31,16 +31,15 @@ function BrandFormScreen() {
     });
   }
 
-  
   const { getValue, setValue, submit } = useForm({
     initialValues: {
       showModal: false,
     },
     onSubmit: ({ brand }) => {
       const { id, name } = brand;
-      
+
       if (!name) {
-        setNameError("Campo nome é obrigatório");
+        setNameError("Campo nome é obrigatório!");
         return;
       }
 
@@ -51,6 +50,7 @@ function BrandFormScreen() {
       saveBrandService({ id, name }).then(() => {
         showToast(message);
         setValue("brand", "");
+        setValue("showModal", true);
       });
     },
   });
@@ -96,12 +96,18 @@ function BrandFormScreen() {
             onChange={(value) => setValue("brand.name", value)}
             type="text"
           />
-          <Label style={{ color: "red" }} htmlFor="newBrand">
+          <Separator size="xs" />
+          <label
+            style={{
+              color: "white",
+              backgroundColor: "red",
+            }}
+          >
             {nameError}
-          </Label>
+          </label>
           <Separator size="lg" />
           <div style={{ display: "flex" }}>
-            <Button onClick={() => setValue("showModal", true)}>Salvar</Button>
+            <Button>Salvar</Button>
             <Separator />
             <Link to="/marcas">
               <Button>Voltar</Button>
