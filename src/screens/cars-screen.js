@@ -44,7 +44,7 @@ function CarsScreen() {
   }));
 
   const filteredCars = carsData.filter(carsData =>
-    carsData.plate.toLowerCase().startsWith(getValue("filterPlate")) && (!getValue("selectedBrand") || carsData.brandId === getValue("selectedBrand"))
+    carsData.plate.toLowerCase().startsWith(getValue("filterPlate")) && (!getValue("selectedBrand") || carsData.brandId === getValue("selectedBrand?.id"))
   );
 
   return (
