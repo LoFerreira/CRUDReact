@@ -20,6 +20,7 @@ function CarsScreen() {
   const { getValue, setValue } = useForm({
     initialValues: {
       deletingCar: false,
+      SelectedBrand: false,
     },
   });
   const { cars, loadCars } = useCars();
@@ -43,9 +44,17 @@ function CarsScreen() {
     brandId: cars.brand?.id,
   }));
 
-  const filteredCars = carsData.filter(carsData =>
-    carsData.plate.toLowerCase().startsWith(getValue("filterPlate")) && (!getValue("selectedBrand") || carsData.brandId === getValue("selectedBrand?.id"))
-  );
+  const filteredCars = carsData.filter((car) => {
+    console.log(
+      !getValue("selectedBrand") || car.brandId == getValue("selectedBrand.id")
+    );
+
+    return (
+      car.plate.toLowerCase().startsWith(getValue("filterPlate")) &&
+      (!getValue("selectedBrand") ||
+        car.brandId == getValue("selectedBrand.id"))
+    );
+  });
 
   return (
     <>
@@ -86,8 +95,10 @@ function CarsScreen() {
           <Label htmlFor="brand" children="Filtrar por marca:" />
           <Separator size="xs" />
           <SelectBrand
-            value={getValue("selectedBrand")}
-            onChange={(marca) => setValue("selectedBrand", marca)}
+            value={getValue("selectedBrand.id")}
+            onChange={(brand) => {
+              setValue("selectedBrand", brand || null);
+            }}
           />
         </div>
       </div>
@@ -132,7 +143,9 @@ function CarsScreen() {
         <Separator size="xs" /> {getValue("deletingCar?.plate")}??
         <Separator size="lg" />
         <div style={{ display: "flex" }}>
-          <Button onClick={() =>  setValue("deletingCar", false)}>Cancelar</Button>
+          <Button onClick={() => setValue("deletingCar", false)}>
+            Cancelar
+          </Button>
           <Separator />
           <Button
             intent="secondary"

@@ -58,7 +58,7 @@ function CarFormScreen() {
   React.useEffect(() => {
     if (idFromRoute) {
       getCarByIdService({ id: idFromRoute }).then((data) => {
-        setValue("plate", data.plate)
+        setValue("plate", data.plate);
         setValue("selectedBrand", data.brandId);
         setValue("color", data.color);
       });
