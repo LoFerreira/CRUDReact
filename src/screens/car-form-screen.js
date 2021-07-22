@@ -19,11 +19,6 @@ import useForm from "../hooks/use-form";
 function CarFormScreen() {
   const { goBack } = useHistory();
   const { id: idFromRoute } = useParams();
-  const { getValue, setValue } = useForm({
-    initialValues: {
-      showModal: false,
-    },
-  });
 
   function showToast(message) {
     store.addNotification({
@@ -40,30 +35,36 @@ function CarFormScreen() {
     ? `Marca editada com sucesso!`
     : `Marca adicionada com sucesso!`;
 
+  const { getValue, setValue, submit } = useForm({
+    initialValues: {
+      "showModal": false,
+    },
+    onSubmit: ({ carEdit }) => {
+      const { id, plate, brandId, color } = carEdit;
 
-  function saveCar() {
-    saveCarService({
-      id: idFromRoute,
-      plate: getValue("plate"),
-      color: getValue("color"),
-      brandId: getValue("selectedBrand.id"),
-    }).then(() => {
-      showToast(message);
-    });
-    setValue("Plate", "");
-    setValue("Color", "");
-    setValue("SelectedBrand", "");
-  }
+      saveCarService({
+        id,
+        plate,
+        color,
+        brandId,
+      }).then(() => {
+        showToast(message);
+        setValue("carEdit", "");
+      });
+    },
+  });
 
   React.useEffect(() => {
     if (idFromRoute) {
       getCarByIdService({ id: idFromRoute }).then((data) => {
-        setValue("plate", data.plate);
-        setValue("selectedBrand", data.brandId);
-        setValue("color", data.color);
+        setValue("carEdit", data);
       });
     }
   }, [idFromRoute]);
+
+
+  console.log(getValue("carEdit.brandId"))
+  console.log(getValue("carEdit"))
 
   return (
     <>
@@ -76,7 +77,7 @@ function CarFormScreen() {
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            saveCar();
+            submit();
           }}
         >
           <Label htmlFor="plate">Placa:</Label>
@@ -84,8 +85,8 @@ function CarFormScreen() {
           {
             <Input
               id="plate"
-              value={getValue("plate")}
-              onChange={(value) => setValue("plate", value)}
+              value={getValue("carEdit.plate")}
+              onChange={(value) => setValue("carEdit.plate", value)}
               type="text"
               placeholder="xxx-0000"
               required
@@ -95,9 +96,9 @@ function CarFormScreen() {
           <Label htmlFor="brand">Marca:</Label>
           <Separator size="xs" />
           <SelectBrand
-            value={getValue("selectedBrand?.id")}
+            value={getValue("carEdit.brandId")}
             onChange={(brandId) => {
-              setValue("selectedBrand", brandId);
+              setValue("carEdit.brandId", brandId.id);
             }}
           />
           <Separator size="lg" />
@@ -105,8 +106,8 @@ function CarFormScreen() {
           <Separator size="xs" />
           <Input
             id="color"
-            value={getValue("color")}
-            onChange={(value) => setValue("color", value)}
+            value={getValue("carEdit.color")}
+            onChange={(value) => setValue("carEdit.color", value)}
             type="text"
             required
           />
@@ -114,13 +115,7 @@ function CarFormScreen() {
           <div style={{ display: "flex" }}>
             <Button
               onClick={() => {
-                if (
-                  getValue("plate") &&
-                  getValue("color") &&
-                  getValue("selectedBrand") !== ""
-                ) {
-                  setValue("showModal", true);
-                }
+                setValue("showModal", true);
               }}
             >
               Salvar

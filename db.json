@@ -62,9 +62,15 @@
     },
     {
       "plate": "aaa-2521",
-      "color": "Preto",
-      "brandId": 16,
+      "color": "Beje",
+      "brandId": 18,
       "id": 11
+    },
+    {
+      "plate": "aaa-2521",
+      "color": "Azul",
+      "brandId": 11,
+      "id": 12
     }
   ],
   "brands": [
