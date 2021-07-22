@@ -14,11 +14,14 @@ import { Link } from "react-router-dom";
 import deleteCarsServices from "../services/delete-car-service";
 import useCars from "../hooks/use-cars";
 import SelectBrand from "../components/select-brand";
+import useForm from "../hooks/use-form";
 
 function CarsScreen() {
-  const [filterPlate, setFilterPlate] = React.useState("");
-  const [selectedBrand, setSelectedBrand] = React.useState(false);
-  const [deletingCar, setDeletingCar] = React.useState();
+  const { getValue, setValue } = useForm({
+    initialValues: {
+      deletingCar: false,
+    },
+  });
   const { cars, loadCars } = useCars();
 
   function showToastDelete() {
@@ -36,15 +39,13 @@ function CarsScreen() {
     id: cars.id,
     plate: cars.plate,
     color: cars.color,
-    label: cars.brand.name,
+    label: cars.brand?.name,
     brandId: cars.brand?.id,
   }));
 
   const filteredCars = carsData.filter(carsData =>
-    carsData.plate.toLowerCase().startsWith(filterPlate) && (!selectedBrand || carsData.brandId === selectedBrand?.id)
+    carsData.plate.toLowerCase().startsWith(getValue("filterPlate")) && (!getValue("selectedBrand") || carsData.brandId === getValue("selectedBrand"))
   );
-
-  console.log(selectedBrand)
 
   return (
     <>
@@ -73,9 +74,9 @@ function CarsScreen() {
           <Label htmlFor="plate" children="Filtrar por placa:" />
           <Separator size="xs" />
           <Input
-            id="plateCar"
-            value={filterPlate}
-            onChange={(value) => setFilterPlate(value)}
+            id="filterPlate"
+            value={getValue("filterPlate")}
+            onChange={(value) => setValue("filterPlate", value)}
             placeholder="XXX-0000"
             type="text"
           />
@@ -85,8 +86,8 @@ function CarsScreen() {
           <Label htmlFor="brand" children="Filtrar por marca:" />
           <Separator size="xs" />
           <SelectBrand
-            value={selectedBrand}
-            onChange={(marca) => setSelectedBrand(marca)}
+            value={getValue("selectedBrand")}
+            onChange={(marca) => setValue("selectedBrand", marca)}
           />
         </div>
       </div>
@@ -111,7 +112,7 @@ function CarsScreen() {
                     <Button
                       intent="secondary"
                       onClick={() => {
-                        setDeletingCar(rowData);
+                        setValue("deletingCar", rowData);
                       }}
                     >
                       Excluir
@@ -124,22 +125,22 @@ function CarsScreen() {
         />
       </Container>
       <Modal
-        visible={Boolean(deletingCar)}
-        onRequestClose={() => setDeletingCar(null)}
+        visible={getValue("deletingCar")}
+        onRequestClose={() => setValue("deletingCar", false)}
       >
         Tem certeza que deseja excluir o carro de placa:
-        <Separator size="xs" /> {deletingCar?.plate}??
+        <Separator size="xs" /> {getValue("deletingCar?.plate")}??
         <Separator size="lg" />
         <div style={{ display: "flex" }}>
-          <Button onClick={() => setDeletingCar(null)}>Cancelar</Button>
+          <Button onClick={() =>  setValue("deletingCar", false)}>Cancelar</Button>
           <Separator />
           <Button
             intent="secondary"
             onClick={() => {
-              deleteCarsServices(deletingCar).then(() => {
+              deleteCarsServices(getValue("deletingCar")).then(() => {
                 showToastDelete();
                 loadCars();
-                setDeletingCar(null);
+                setValue("deletingCar", false);
               });
             }}
           >

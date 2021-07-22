@@ -25,7 +25,7 @@ function CarFormScreen() {
     },
   });
 
-  function showToast({ message }) {
+  function showToast(message) {
     store.addNotification({
       message,
       type: "success",
@@ -36,6 +36,11 @@ function CarFormScreen() {
     });
   }
 
+  const message = idFromRoute
+    ? `Marca editada com sucesso!`
+    : `Marca adicionada com sucesso!`;
+
+
   function saveCar() {
     saveCarService({
       id: idFromRoute,
@@ -43,9 +48,7 @@ function CarFormScreen() {
       color: getValue("color"),
       brandId: getValue("selectedBrand.id"),
     }).then(() => {
-      showToast({
-        message: `Carro ${idFromRoute ? "editado" : "adicionado"} com sucesso`,
-      });
+      showToast(message);
     });
     setValue("Plate", "");
     setValue("Color", "");
@@ -55,10 +58,9 @@ function CarFormScreen() {
   React.useEffect(() => {
     if (idFromRoute) {
       getCarByIdService({ id: idFromRoute }).then((data) => {
-        setValue("plate", data.plate);
+        setValue("plate", data.plate)
         setValue("selectedBrand", data.brandId);
         setValue("color", data.color);
-        console.log(data)
       });
     }
   }, [idFromRoute]);
@@ -79,14 +81,16 @@ function CarFormScreen() {
         >
           <Label htmlFor="plate">Placa:</Label>
           <Separator size="xs" />
-          {<Input
-            id="plate"
-            value={getValue("plate")}
-            onChange={(value) => setValue("plate", value)}
-            type="text"
-            placeholder="xxx-0000"
-            required
-          />}
+          {
+            <Input
+              id="plate"
+              value={getValue("plate")}
+              onChange={(value) => setValue("plate", value)}
+              type="text"
+              placeholder="xxx-0000"
+              required
+            />
+          }
           <Separator size="lg" />
           <Label htmlFor="brand">Marca:</Label>
           <Separator size="xs" />
